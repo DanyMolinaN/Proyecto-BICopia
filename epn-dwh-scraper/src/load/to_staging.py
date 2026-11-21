@@ -33,6 +33,11 @@ class StagingLoader:
         "publicaciones": "stg_publicaciones",
         "sniese": "stg_oferta_sniese",
         "oferta_sniese": "stg_oferta_sniese",
+        "ces": "stg_ies_ces",
+        "ies_ces": "stg_ies_ces",
+        "stg_ies_ces": "stg_ies_ces",
+        "ejecucion_institucion": "stg_ejecucion_institucion",
+        "stg_ejecucion_institucion": "stg_ejecucion_institucion",
     }
 
     def __init__(self, connection_url: Optional[str] = None) -> None:

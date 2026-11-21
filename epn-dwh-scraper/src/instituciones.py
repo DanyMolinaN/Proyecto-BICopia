@@ -71,8 +71,27 @@ class InstitucionesRegistry:
             self._instituciones[inst.id] = inst
 
     def get(self, institucion_id: str) -> Optional[InstitucionConfig]:
-        """Devuelve la configuración de una institución por ID."""
-        return self._instituciones.get(institucion_id)
+        """Devuelve la configuración de una institución por ID o alias."""
+        if not institucion_id:
+            return None
+        sid = str(institucion_id).strip()
+        if sid in self._instituciones:
+            return self._instituciones[sid]
+        # Búsqueda por ces_cod o sigla en las instituciones cargadas
+        for inst in self._instituciones.values():
+            if str(inst.ces_cod) == sid or (inst.sigla and inst.sigla.lower() == sid.lower()):
+                return inst
+        # Búsqueda diferida en catálogo CES-64 si no se encontró en el registro actual
+        if not hasattr(self, "_ces64_fallback"):
+            try:
+                self._ces64_fallback = load_ces64()
+            except Exception:
+                self._ces64_fallback = None
+        if self._ces64_fallback and self._ces64_fallback is not self:
+            found = self._ces64_fallback.get(sid)
+            if found:
+                return found
+        return None
 
     def all(self) -> List[InstitucionConfig]:
         """Lista todas las instituciones registradas."""

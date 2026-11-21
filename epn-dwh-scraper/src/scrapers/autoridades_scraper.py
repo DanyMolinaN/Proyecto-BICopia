@@ -70,14 +70,24 @@ def _detectar_condicion(cargo_texto: str) -> Tuple[str, str]:
 class AutoridadesScraper(BaseScraper):
     """Extrae las autoridades centrales y de unidades academicas de una IES."""
 
-    def __init__(self, http_client=None, institucion_id=None,
-                 facultad_urls: Optional[List[Tuple[str, str]]] = None) -> None:
+    def __init__(
+        self,
+        http_client=None,
+        institucion_id=None,
+        facultad_urls: Optional[List[Tuple[str, str]]] = None,
+        institucion=None,
+    ) -> None:
         """
         Args:
             facultad_urls: Lista de (url, nombre_facultad) suministrada externamente (D4).
                 Si es None, se usa la lista dura de la EPN como respaldo.
+            institucion: Configuración inyectada de la institución (regla 2).
         """
-        super().__init__(http_client=http_client, institucion_id=institucion_id)
+        super().__init__(
+            http_client=http_client,
+            institucion_id=institucion_id,
+            institucion=institucion,
+        )
         self._facultad_urls = facultad_urls  # D4
 
     # D5: fecha de captura
@@ -90,11 +100,17 @@ class AutoridadesScraper(BaseScraper):
         from src.config import settings as cfg
         from src.instituciones import registry
 
-        inst = registry.get(self.institucion_id)
-        if inst:
+        inst = self.institucion or registry.get(self.institucion_id)
+        if inst and inst.base_url:
             url = inst.get_endpoint("autoridades") or f"{inst.base_url}/autoridades/"
+        elif inst:
+            url = inst.get_endpoint("autoridades") or ""
         else:
             url = cfg.endpoints.get("autoridades", f"{cfg.base_url}/autoridades/")
+
+        if not url:
+            self.logger.warning(f"[{self.institucion_id}] Sin URL configurada para autoridades.")
+            return []
 
         html_content = self.http_client.get(url)
         if not html_content:

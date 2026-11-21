@@ -311,12 +311,42 @@ def main() -> None:
     parser.add_argument("--force-refresh", action="store_true", help="Reescribir archivos en cache local con nuevas descargas.")
     
     # Nuevas banderas del Hito 2 (Regla 7 y F4)
-    parser.add_argument("--institucion", type=str, default="EPN", help="ID de la institucion a procesar (ej: EPN, ESPE, USFQ).")
+    parser.add_argument("--institucion", type=str, default="EPN", help="ID de la institucion a procesar (ej: EPN, ESPE, USFQ o código CES).")
     parser.add_argument("--max-paginas", type=int, default=50, help="Maximo de paginas a recorrer en endpoints paginados.")
     parser.add_argument("--dry-run", action="store_true", help="Ejecutar en modo prueba sin escribir en BD ni persistir masivamente.")
     parser.add_argument("--target", choices=["stg", "sqlite", "csv", "all"], default="sqlite", help="Destino de persistencia (defecto: sqlite).")
 
+    # Comando único CES-64 (Fase 7 y Ola multi-institución)
+    parser.add_argument("--ces64", action="store_true", help="Ejecutar orquestador multi-institución para el catálogo de las 64 IES del CES.")
+    parser.add_argument("--tipo", type=str, choices=["publica", "particular_autofinanciada", "particular_cofinanciada"], default=None, help="Filtrar IES por tipo de financiamiento CES.")
+    parser.add_argument("--lote", type=int, default=None, help="Número máximo de instituciones a procesar en el lote.")
+    parser.add_argument("--modulo", type=str, choices=["ces", "noticias", "autoridades", "oferta", "todos"], default="todos", help="Módulo a ejecutar (ces, noticias, autoridades, oferta, todos).")
+    parser.add_argument("--reanudar", action="store_true", help="Omitir instituciones y módulos ya extraídos con éxito en la ejecución actual.")
+
     args = parser.parse_args()
+
+    # Flujo comando único --ces64
+    if args.ces64:
+        from src.ces64_runner import Ces64Runner
+        modulos_list = ["ces", "noticias", "autoridades", "oferta"] if args.modulo == "todos" else [args.modulo]
+        # Determinar si se pasó institución específica (distinta del default EPN si el usuario no la especificó)
+        # Para detectar si el usuario pasó --institucion explícitamente:
+        inst_especifica = [args.institucion] if "--institucion" in sys.argv else None
+        
+        runner = Ces64Runner(
+            modulos=modulos_list,
+            tipo=args.tipo,
+            institucion_ids=inst_especifica,
+            lote=args.lote,
+            max_paginas=args.max_paginas,
+            dry_run=args.dry_run,
+            reanudar=args.reanudar,
+            use_cache=not args.no_cache,
+            force_refresh=args.force_refresh,
+            target="stg" if args.load_stg else args.target,
+        )
+        runner.run()
+        return
 
     pipeline = ETLPipeline(
         use_cache=not args.no_cache,

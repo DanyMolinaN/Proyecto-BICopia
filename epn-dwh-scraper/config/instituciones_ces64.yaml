@@ -1,1138 +1,1089 @@
-# Catálogo extendido de las 64 IES del CES para el scraper multi-institución.
-# Generado en la Fase 1 del prompt PROMPT_Extraccion_64_IES_CES.md (rama ies-ces-64).
-#
-# Campos nuevos respecto al archivo instituciones.yaml original:
-#   ces_cod        : identificador CES (parámetro ?cod= de la URL de ficha)
-#   ces_codp       : parámetro codp de la URL de ficha (328=publica, 1540=autofinanciada, 5398=cofinanciada)
-#   ces_url        : URL completa de la ficha institucional en ces.gob.ec
-#   provincia      : según catálogo CES
-#   canton         : según catálogo CES
-#   portal_url     : vacío hasta validación en Fase 3
-#   estado_integracion: pendiente | portal_validado | piloto | habilitada
-#
-# La EPN conserva su configuración operativa original con los campos nuevos añadidos.
-
 instituciones:
-
-  # ─────────────────────────────────────────────────────────────
-  # PÚBLICAS NACIONALES (codp=328)  —  36 instituciones
-  # ─────────────────────────────────────────────────────────────
-
-  - id: "1001"
-    nombre: "Escuela Politécnica Nacional"
-    sigla: "EPN"
-    ces_cod: 1001
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1001&codp=328"
-    base_url: "https://www.epn.edu.ec"
-    portal_url: "https://www.epn.edu.ec"
-    endpoints:
-      robots_txt: "https://www.epn.edu.ec/robots.txt"
-      facultades: "https://www.epn.edu.ec/facultades/"
-      oferta_grado: "https://www.epn.edu.ec/oferta-de-grado/"
-      oferta_posgrado: "https://www.epn.edu.ec/oferta-de-posgrado/"
-      autoridades: "https://www.epn.edu.ec/autoridades/"
-      historia: "https://www.epn.edu.ec/historia/"
-      nosotros: "https://www.epn.edu.ec/nosotros/"
-      investigacion_cifras: "https://www.epn.edu.ec/investigacion-en-cifras/"
-      noticias_web: "https://www.epn.edu.ec/noticias/"
-      noticias_api: "https://www.epn.edu.ec/wp-json/wp/v2/posts"
-      wp_categories: "https://www.epn.edu.ec/wp-json/wp/v2/categories"
-    adaptador: "wordpress"
-    estado_integracion: "habilitada"
-    observaciones: "Prototipo original; portal WordPress; datos 2024-2026. Alias legacy: EPN."
-
-  - id: "1003"
-    nombre: "Escuela Superior Politécnica Agropecuaria de Manabí Manuel Félix López - ESPAM MFL"
-    sigla: "ESPAM MFL"
-    ces_cod: 1003
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "MANABÍ"
-    canton: "BOLÍVAR"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1003&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1002"
-    nombre: "Escuela Superior Politécnica de Chimborazo"
-    sigla: "ESPOCH"
-    ces_cod: 1002
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "CHIMBORAZO"
-    canton: "RIOBAMBA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1002&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1021"
-    nombre: "Escuela Superior Politécnica del Litoral (ESPOL)"
-    sigla: "ESPOL"
-    ces_cod: 1021
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1021&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1026"
-    nombre: "Facultad Latinoamericana de Ciencias Sociales, FLACSO"
-    sigla: "FLACSO"
-    ces_cod: 1026
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1026&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1057"
-    nombre: "Instituto de Altos Estudios Nacionales - IAEN"
-    sigla: "IAEN"
-    ces_cod: 1057
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1057&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1018"
-    nombre: "Universidad Agraria del Ecuador"
-    sigla: "UAE"
-    ces_cod: 1018
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1018&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1022"
-    nombre: "Universidad Andina Simón Bolívar"
-    sigla: "UASB"
-    ces_cod: 1022
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1022&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1005"
-    nombre: "Universidad Central del Ecuador"
-    sigla: "UCE"
-    ces_cod: 1005
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1005&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1007"
-    nombre: "Universidad de Cuenca"
-    sigla: "UCUENCA"
-    ces_cod: 1007
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "AZUAY"
-    canton: "CUENCA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1007&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1006"
-    nombre: "Universidad de Guayaquil"
-    sigla: "UG"
-    ces_cod: 1006
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1006&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1081"
-    nombre: "Universidad de Investigación de Tecnología Experimental Yachay"
-    sigla: "YACHAY"
-    ces_cod: 1081
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "IMBABURA"
-    canton: "SAN MIGUEL DE URCUQUÍ"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1081&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1082"
-    nombre: "Universidad de las Artes (UARTES)"
-    sigla: "UARTES"
-    ces_cod: 1082
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1082&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1079"
-    nombre: "Universidad de las Fuerzas Armadas-ESPE"
-    sigla: "ESPE"
-    ces_cod: 1079
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "PICHINCHA"
-    canton: "RUMIÑAHUI"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1079&codp=328"
-    base_url: "https://www.espe.edu.ec"
-    portal_url: "https://www.espe.edu.ec"
-    endpoints:
-      robots_txt: "https://www.espe.edu.ec/robots.txt"
-      facultades: "https://www.espe.edu.ec/facultades/"
-      autoridades: "https://www.espe.edu.ec/autoridades/"
-      noticias_web: "https://www.espe.edu.ec/noticias/"
-      noticias_api: "https://www.espe.edu.ec/wp-json/wp/v2/posts"
-      wp_categories: "https://www.espe.edu.ec/wp-json/wp/v2/categories"
-    adaptador: "wordpress"
-    estado_integracion: "piloto"
-    observaciones: "Portal WordPress; piloto para prueba de cobertura P2 y P3. Alias legacy: ESPE."
-
-  - id: "3068"
-    nombre: "Universidad de Seguridad Ciudadana y Ciencias Policiales - USECIPOL"
-    sigla: "USECIPOL"
-    ces_cod: 3068
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=3068&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1058"
-    nombre: "Universidad Estatal Amazónica"
-    sigla: "UEA"
-    ces_cod: 1058
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "PASTAZA"
-    canton: "PASTAZA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1058&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1017"
-    nombre: "Universidad Estatal de Bolívar"
-    sigla: "UEB"
-    ces_cod: 1017
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "BOLÍVAR"
-    canton: "GUARANDA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1017&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1024"
-    nombre: "Universidad Estatal de Milagro"
-    sigla: "UNEMI"
-    ces_cod: 1024
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "GUAYAS"
-    canton: "MILAGRO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1024&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1025"
-    nombre: "Universidad Estatal del Sur de Manabí"
-    sigla: "UNESUM"
-    ces_cod: 1025
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "MANABÍ"
-    canton: "JIPIJAPA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1025&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1023"
-    nombre: "Universidad Estatal Península de Santa Elena - UPSE"
-    sigla: "UPSE"
-    ces_cod: 1023
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "SANTA ELENA"
-    canton: "LA LIBERTAD"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1023&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1068"
-    nombre: "Universidad Intercultural de las Nacionalidades y Pueblos Indígenas Amawtay Wasi"
-    sigla: "AMAWTAY WASI"
-    ces_cod: 1068
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1068&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1016"
-    nombre: "Universidad Laica Eloy Alfaro de Manabí"
-    sigla: "ULEAM"
-    ces_cod: 1016
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "MANABÍ"
-    canton: "MANTA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1016&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1019"
-    nombre: "Universidad Nacional de Chimborazo"
-    sigla: "UNACH"
-    ces_cod: 1019
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "CHIMBORAZO"
-    canton: "RIOBAMBA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1019&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1083"
-    nombre: "Universidad Nacional de Educación"
-    sigla: "UNAE"
-    ces_cod: 1083
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "CAÑAR"
-    canton: "AZOGUES"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1083&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1008"
-    nombre: "Universidad Nacional de Loja"
-    sigla: "UNL"
-    ces_cod: 1008
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "LOJA"
-    canton: "LOJA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1008&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1074"
-    nombre: "Universidad Politécnica Estatal del Carchi"
-    sigla: "UPEC"
-    ces_cod: 1074
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "CARCHI"
-    canton: "TULCÁN"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1074&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "3069"
-    nombre: "Universidad Pública de Santo Domingo de los Tsáchilas"
-    sigla: "UPSD"
-    ces_cod: 3069
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "SANTO DOMINGO DE LOS TSÁCHILAS"
-    canton: "SANTO DOMINGO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=3069&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1080"
-    nombre: "Universidad Regional Amazónica IKIAM"
-    sigla: "IKIAM"
-    ces_cod: 1080
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "NAPO"
-    canton: "TENA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1080&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1012"
-    nombre: "Universidad Técnica Luis Vargas Torres de Esmeraldas (UTLVTE)"
-    sigla: "UTLVTE"
-    ces_cod: 1012
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "ESMERALDAS"
-    canton: "ESMERALDAS"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1012&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1010"
-    nombre: "Universidad Técnica de Ambato"
-    sigla: "UTA"
-    ces_cod: 1010
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "TUNGURAHUA"
-    canton: "AMBATO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1010&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1013"
-    nombre: "Universidad Técnica de Babahoyo"
-    sigla: "UTB"
-    ces_cod: 1013
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "LOS RÍOS"
-    canton: "BABAHOYO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1013&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1020"
-    nombre: "Universidad Técnica de Cotopaxi"
-    sigla: "UTC"
-    ces_cod: 1020
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "COTOPAXI"
-    canton: "LATACUNGA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1020&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1011"
-    nombre: "Universidad Técnica de Machala"
-    sigla: "UTMACH"
-    ces_cod: 1011
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "EL ORO"
-    canton: "MACHALA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1011&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1009"
-    nombre: "Universidad Técnica de Manabí"
-    sigla: "UTM"
-    ces_cod: 1009
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "MANABÍ"
-    canton: "PORTOVIEJO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1009&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1015"
-    nombre: "Universidad Técnica del Norte"
-    sigla: "UTN"
-    ces_cod: 1015
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "IMBABURA"
-    canton: "IBARRA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1015&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1014"
-    nombre: "Universidad Técnica Estatal de Quevedo"
-    sigla: "UTEQ"
-    ces_cod: 1014
-    ces_codp: 328
-    tipo_institucional: "pública"
-    financiamiento: "pública"
-    provincia: "LOS RÍOS"
-    canton: "QUEVEDO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1014&codp=328"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  # ─────────────────────────────────────────────────────────────
-  # PARTICULARES AUTOFINANCIADAS (codp=1540)  —  20 instituciones
-  # ─────────────────────────────────────────────────────────────
-
-  - id: "3027"
-    nombre: "Universidad Bolivariana del Ecuador"
-    sigla: "UBE"
-    ces_cod: 3027
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "GUAYAS"
-    canton: "DURÁN"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=3027&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1049"
-    nombre: "Universidad Casa Grande"
-    sigla: "UCG"
-    ces_cod: 1049
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1049&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1037"
-    nombre: "Universidad de Especialidades Espíritu Santo - UEES"
-    sigla: "UEES"
-    ces_cod: 1037
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "GUAYAS"
-    canton: "SAMBORONDÓN"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1037&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1053"
-    nombre: "Universidad de Especialidades Turísticas"
-    sigla: "UCT"
-    ces_cod: 1053
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1053&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1040"
-    nombre: "Universidad de las Américas"
-    sigla: "UDLA"
-    ces_cod: 1040
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1040&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1070"
-    nombre: "Universidad de los Hemisferios"
-    sigla: "UH"
-    ces_cod: 1070
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1070&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1059"
-    nombre: "Universidad de Otavalo"
-    sigla: "UOTAVALO"
-    ces_cod: 1059
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "IMBABURA"
-    canton: "OTAVALO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1059&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1044"
-    nombre: "Universidad del Pacífico-Escuela de Negocios"
-    sigla: "UPACIFICO"
-    ces_cod: 1044
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1044&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "3013"
-    nombre: "Universidad del Río-UDR"
-    sigla: "UDR"
-    ces_cod: 3013
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=3013&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1073"
-    nombre: "Universidad Iberoamericana del Ecuador"
-    sigla: "UNIBE"
-    ces_cod: 1073
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1073&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1041"
-    nombre: "Universidad Internacional del Ecuador (UIDE)"
-    sigla: "UIDE"
-    ces_cod: 1041
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1041&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1056"
-    nombre: "Universidad Metropolitana"
-    sigla: "UMET"
-    ces_cod: 1056
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1056&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1036"
-    nombre: "Universidad Particular Internacional SEK"
-    sigla: "SEK"
-    ces_cod: 1036
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1036&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1042"
-    nombre: "Universidad Regional Autónoma de los Andes UNIANDES"
-    sigla: "UNIANDES"
-    ces_cod: 1042
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "TUNGURAHUA"
-    canton: "AMBATO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1042&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1038"
-    nombre: "Universidad San Francisco de Quito USFQ"
-    sigla: "USFQ"
-    ces_cod: 1038
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1038&codp=1540"
-    base_url: "https://www.usfq.edu.ec"
-    portal_url: "https://www.usfq.edu.ec"
-    endpoints:
-      robots_txt: "https://www.usfq.edu.ec/robots.txt"
-      facultades: "https://www.usfq.edu.ec/colegios-y-unidades-academicas"
-      autoridades: "https://www.usfq.edu.ec/autoridades"
-      noticias_web: "https://www.usfq.edu.ec/noticias"
-      noticias_api: "https://www.usfq.edu.ec/wp-json/wp/v2/posts"
-      wp_categories: "https://www.usfq.edu.ec/wp-json/wp/v2/categories"
-    adaptador: "wordpress"
-    estado_integracion: "piloto"
-    observaciones: "Portal WordPress; piloto para prueba de cobertura P1, P2 y P3. Alias legacy: USFQ."
-
-  - id: "1060"
-    nombre: "Universidad San Gregorio de Portoviejo"
-    sigla: "USGP"
-    ces_cod: 1060
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "MANABÍ"
-    canton: "PORTOVIEJO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1060&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1077"
-    nombre: "Universidad Tecnológica ECOTEC"
-    sigla: "ECOTEC"
-    ces_cod: 1077
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "GUAYAS"
-    canton: "SAMBORONDÓN"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1077&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1050"
-    nombre: "Universidad Tecnológica Empresarial de Guayaquil"
-    sigla: "UTEG"
-    ces_cod: 1050
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1050&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1045"
-    nombre: "Universidad Tecnológica Indoamérica"
-    sigla: "UTI"
-    ces_cod: 1045
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "TUNGURAHUA"
-    canton: "AMBATO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1045&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1051"
-    nombre: "Universidad Tecnológica Israel"
-    sigla: "UISRAEL"
-    ces_cod: 1051
-    ces_codp: 1540
-    tipo_institucional: "particular_autofinanciada"
-    financiamiento: "particular_autofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1051&codp=1540"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  # ─────────────────────────────────────────────────────────────
-  # PARTICULARES COFINANCIADAS (codp=5398)  —  8 instituciones
-  # ─────────────────────────────────────────────────────────────
-
-  - id: "1027"
-    nombre: "Pontificia Universidad Católica del Ecuador"
-    sigla: "PUCE"
-    ces_cod: 1027
-    ces_codp: 5398
-    tipo_institucional: "particular_cofinanciada"
-    financiamiento: "particular_cofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1027&codp=5398"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1029"
-    nombre: "Universidad Católica de Cuenca"
-    sigla: "UCACUE"
-    ces_cod: 1029
-    ces_codp: 5398
-    tipo_institucional: "particular_cofinanciada"
-    financiamiento: "particular_cofinanciada"
-    provincia: "AZUAY"
-    canton: "CUENCA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1029&codp=5398"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1028"
-    nombre: "Universidad Católica de Santiago de Guayaquil (UCSG)"
-    sigla: "UCSG"
-    ces_cod: 1028
-    ces_codp: 5398
-    tipo_institucional: "particular_cofinanciada"
-    financiamiento: "particular_cofinanciada"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1028&codp=5398"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1033"
-    nombre: "Universidad del Azuay"
-    sigla: "UDA"
-    ces_cod: 1033
-    ces_codp: 5398
-    tipo_institucional: "particular_cofinanciada"
-    financiamiento: "particular_cofinanciada"
-    provincia: "AZUAY"
-    canton: "CUENCA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1033&codp=5398"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1030"
-    nombre: "Universidad Laica Vicente Rocafuerte de Guayaquil"
-    sigla: "ULVR"
-    ces_cod: 1030
-    ces_codp: 5398
-    tipo_institucional: "particular_cofinanciada"
-    financiamiento: "particular_cofinanciada"
-    provincia: "GUAYAS"
-    canton: "GUAYAQUIL"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1030&codp=5398"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1034"
-    nombre: "Universidad Politécnica Salesiana - UPS"
-    sigla: "UPS"
-    ces_cod: 1034
-    ces_codp: 5398
-    tipo_institucional: "particular_cofinanciada"
-    financiamiento: "particular_cofinanciada"
-    provincia: "AZUAY"
-    canton: "CUENCA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1034&codp=5398"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1031"
-    nombre: "Universidad Técnica Particular de Loja"
-    sigla: "UTPL"
-    ces_cod: 1031
-    ces_codp: 5398
-    tipo_institucional: "particular_cofinanciada"
-    financiamiento: "particular_cofinanciada"
-    provincia: "LOJA"
-    canton: "LOJA"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1031&codp=5398"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
-
-  - id: "1032"
-    nombre: "Universidad UTE"
-    sigla: "UTE"
-    ces_cod: 1032
-    ces_codp: 5398
-    tipo_institucional: "particular_cofinanciada"
-    financiamiento: "particular_cofinanciada"
-    provincia: "PICHINCHA"
-    canton: "DISTRITO METROPOLITANO DE QUITO"
-    ces_url: "https://www.ces.gob.ec/?page_id=25&cod=1032&codp=5398"
-    base_url: ""
-    portal_url: ""
-    endpoints: {}
-    adaptador: "pendiente"
-    estado_integracion: "pendiente"
-    observaciones: "Portal no validado; requiere Fase 3."
+- id: '1001'
+  nombre: Escuela Politécnica Nacional
+  sigla: EPN
+  ces_cod: 1001
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1001&codp=328
+  base_url: https://www.epn.edu.ec
+  portal_url: https://www.epn.edu.ec
+  endpoints:
+    robots_txt: https://www.epn.edu.ec/robots.txt
+    facultades: https://www.epn.edu.ec/facultades/
+    oferta_grado: https://www.epn.edu.ec/programas
+    oferta_posgrado: https://www.epn.edu.ec/oferta-de-posgrado/
+    autoridades: https://www.epn.edu.ec/autoridades
+    historia: https://www.epn.edu.ec/historia/
+    nosotros: https://www.epn.edu.ec/nosotros/
+    investigacion_cifras: https://www.epn.edu.ec/investigacion-en-cifras/
+    noticias_web: https://www.epn.edu.ec/noticias
+    noticias_api: https://www.epn.edu.ec/wp-json/wp/v2/posts
+    wp_categories: https://www.epn.edu.ec/wp-json/wp/v2/categories
+  adaptador: wordpress
+  estado_integracion: habilitada
+  observaciones: 'Prototipo original; portal WordPress; datos 2024-2026. Alias legacy:
+    EPN.'
+- id: '1003'
+  nombre: Escuela Superior Politécnica Agropecuaria de Manabí Manuel Félix López -
+    ESPAM MFL
+  sigla: ESPAM MFL
+  ces_cod: 1003
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: MANABÍ
+  canton: BOLÍVAR
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1003&codp=328
+  base_url: https://www.espam.edu.ec
+  portal_url: https://www.espam.edu.ec
+  endpoints:
+    noticias_web: https://www.espam.edu.ec/publicaciones
+    robots_txt: https://www.espam.edu.ec/robots.txt
+  adaptador: pendiente
+  estado_integracion: portal_validado
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1002'
+  nombre: Escuela Superior Politécnica de Chimborazo
+  sigla: ESPOCH
+  ces_cod: 1002
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: CHIMBORAZO
+  canton: RIOBAMBA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1002&codp=328
+  base_url: https://www.espoch.edu.ec
+  portal_url: https://www.espoch.edu.ec
+  endpoints:
+    noticias_web: https://www.espoch.edu.ec/noticias
+    autoridades: https://www.espoch.edu.ec/autoridades
+    oferta_grado: https://www.espoch.edu.ec/grado
+    robots_txt: https://www.espoch.edu.ec/robots.txt
+    noticias_api: https://www.espoch.edu.ec/wp-json/wp/v2/posts
+    wp_categories: https://www.espoch.edu.ec/wp-json/wp/v2/categories
+  adaptador: wordpress
+  estado_integracion: portal_validado
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1021'
+  nombre: Escuela Superior Politécnica del Litoral (ESPOL)
+  sigla: ESPOL
+  ces_cod: 1021
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1021&codp=328
+  base_url: https://www.espol.edu.ec
+  portal_url: https://www.espol.edu.ec
+  endpoints:
+    noticias_web: https://www.espol.edu.ec/noticias
+    autoridades: https://www.espol.edu.ec/autoridades
+    oferta_grado: https://www.espol.edu.ec/oferta-academica
+    robots_txt: https://www.espol.edu.ec/robots.txt
+  adaptador: pendiente
+  estado_integracion: portal_validado
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1026'
+  nombre: Facultad Latinoamericana de Ciencias Sociales, FLACSO
+  sigla: FLACSO
+  ces_cod: 1026
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1026&codp=328
+  base_url: https://www.flacso.edu.ec
+  portal_url: https://www.flacso.edu.ec
+  endpoints:
+    robots_txt: https://www.flacso.edu.ec/robots.txt
+  adaptador: pendiente
+  estado_integracion: portal_validado
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1057'
+  nombre: Instituto de Altos Estudios Nacionales - IAEN
+  sigla: IAEN
+  ces_cod: 1057
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1057&codp=328
+  base_url: https://www.iaen.edu.ec
+  portal_url: https://www.iaen.edu.ec
+  endpoints:
+    autoridades: https://www.iaen.edu.ec/rector
+    oferta_grado: https://www.iaen.edu.ec/posgrado
+    robots_txt: https://www.iaen.edu.ec/robots.txt
+    noticias_api: https://www.iaen.edu.ec/wp-json/wp/v2/posts
+    wp_categories: https://www.iaen.edu.ec/wp-json/wp/v2/categories
+  adaptador: wordpress
+  estado_integracion: portal_validado
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1018'
+  nombre: Universidad Agraria del Ecuador
+  sigla: UAE
+  ces_cod: 1018
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1018&codp=328
+  base_url: http://www.uagraria.edu.ec
+  portal_url: http://www.uagraria.edu.ec
+  endpoints:
+    noticias_web: http://www.uagraria.edu.ec/noticias
+    robots_txt: http://www.uagraria.edu.ec/robots.txt
+  adaptador: pendiente
+  estado_integracion: portal_validado
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1022'
+  nombre: Universidad Andina Simón Bolívar
+  sigla: UASB
+  ces_cod: 1022
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1022&codp=328
+  base_url: https://www.uasb.edu.ec
+  portal_url: https://www.uasb.edu.ec
+  endpoints:
+    noticias_web: https://www.uasb.edu.ec/noticias
+    autoridades: https://www.uasb.edu.ec/autoridades
+    oferta_grado: https://www.uasb.edu.ec/oferta-academica
+    robots_txt: https://www.uasb.edu.ec/robots.txt
+    noticias_api: https://www.uasb.edu.ec/wp-json/wp/v2/posts
+    wp_categories: https://www.uasb.edu.ec/wp-json/wp/v2/categories
+  adaptador: wordpress
+  estado_integracion: portal_validado
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1005'
+  nombre: Universidad Central del Ecuador
+  sigla: UCE
+  ces_cod: 1005
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1005&codp=328
+  base_url: https://www.uce.edu.ec
+  portal_url: https://www.uce.edu.ec
+  endpoints:
+    oferta_grado: https://www.uce.edu.ec/grado
+    robots_txt: https://www.uce.edu.ec/robots.txt
+  adaptador: pendiente
+  estado_integracion: portal_validado
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1007'
+  nombre: Universidad de Cuenca
+  sigla: UCUENCA
+  ces_cod: 1007
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: AZUAY
+  canton: CUENCA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1007&codp=328
+  base_url: https://www.ucuenca.edu.ec
+  portal_url: https://www.ucuenca.edu.ec
+  endpoints:
+    noticias_web: https://www.ucuenca.edu.ec/noticias
+    autoridades: https://www.ucuenca.edu.ec/autoridades
+    oferta_grado: https://www.ucuenca.edu.ec/oferta-academica
+    robots_txt: https://www.ucuenca.edu.ec/robots.txt
+    noticias_api: https://www.ucuenca.edu.ec/wp-json/wp/v2/posts
+    wp_categories: https://www.ucuenca.edu.ec/wp-json/wp/v2/categories
+  adaptador: wordpress
+  estado_integracion: portal_validado
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1006'
+  nombre: Universidad de Guayaquil
+  sigla: UG
+  ces_cod: 1006
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1006&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1081'
+  nombre: Universidad de Investigación de Tecnología Experimental Yachay
+  sigla: YACHAY
+  ces_cod: 1081
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: IMBABURA
+  canton: SAN MIGUEL DE URCUQUÍ
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1081&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1082'
+  nombre: Universidad de las Artes (UARTES)
+  sigla: UARTES
+  ces_cod: 1082
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1082&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1079'
+  nombre: Universidad de las Fuerzas Armadas-ESPE
+  sigla: ESPE
+  ces_cod: 1079
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: PICHINCHA
+  canton: RUMIÑAHUI
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1079&codp=328
+  base_url: https://www.espe.edu.ec
+  portal_url: https://www.espe.edu.ec
+  endpoints:
+    robots_txt: https://www.espe.edu.ec/robots.txt
+    facultades: https://www.espe.edu.ec/facultades/
+    autoridades: https://www.espe.edu.ec/autoridades
+    noticias_web: https://www.espe.edu.ec/noticias
+    noticias_api: https://www.espe.edu.ec/wp-json/wp/v2/posts
+    wp_categories: https://www.espe.edu.ec/wp-json/wp/v2/categories
+    oferta_grado: https://www.espe.edu.ec/oferta-academica
+  adaptador: wordpress
+  estado_integracion: piloto
+  observaciones: 'Portal WordPress; piloto para prueba de cobertura P2 y P3. Alias
+    legacy: ESPE.'
+- id: '3068'
+  nombre: Universidad de Seguridad Ciudadana y Ciencias Policiales - USECIPOL
+  sigla: USECIPOL
+  ces_cod: 3068
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=3068&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1058'
+  nombre: Universidad Estatal Amazónica
+  sigla: UEA
+  ces_cod: 1058
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: PASTAZA
+  canton: PASTAZA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1058&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1017'
+  nombre: Universidad Estatal de Bolívar
+  sigla: UEB
+  ces_cod: 1017
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: BOLÍVAR
+  canton: GUARANDA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1017&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1024'
+  nombre: Universidad Estatal de Milagro
+  sigla: UNEMI
+  ces_cod: 1024
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: GUAYAS
+  canton: MILAGRO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1024&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1025'
+  nombre: Universidad Estatal del Sur de Manabí
+  sigla: UNESUM
+  ces_cod: 1025
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: MANABÍ
+  canton: JIPIJAPA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1025&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1023'
+  nombre: Universidad Estatal Península de Santa Elena - UPSE
+  sigla: UPSE
+  ces_cod: 1023
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: SANTA ELENA
+  canton: LA LIBERTAD
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1023&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1068'
+  nombre: Universidad Intercultural de las Nacionalidades y Pueblos Indígenas Amawtay
+    Wasi
+  sigla: AMAWTAY WASI
+  ces_cod: 1068
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1068&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1016'
+  nombre: Universidad Laica Eloy Alfaro de Manabí
+  sigla: ULEAM
+  ces_cod: 1016
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: MANABÍ
+  canton: MANTA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1016&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1019'
+  nombre: Universidad Nacional de Chimborazo
+  sigla: UNACH
+  ces_cod: 1019
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: CHIMBORAZO
+  canton: RIOBAMBA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1019&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1083'
+  nombre: Universidad Nacional de Educación
+  sigla: UNAE
+  ces_cod: 1083
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: CAÑAR
+  canton: AZOGUES
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1083&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1008'
+  nombre: Universidad Nacional de Loja
+  sigla: UNL
+  ces_cod: 1008
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: LOJA
+  canton: LOJA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1008&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1074'
+  nombre: Universidad Politécnica Estatal del Carchi
+  sigla: UPEC
+  ces_cod: 1074
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: CARCHI
+  canton: TULCÁN
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1074&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '3069'
+  nombre: Universidad Pública de Santo Domingo de los Tsáchilas
+  sigla: UPSD
+  ces_cod: 3069
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: SANTO DOMINGO DE LOS TSÁCHILAS
+  canton: SANTO DOMINGO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=3069&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1080'
+  nombre: Universidad Regional Amazónica IKIAM
+  sigla: IKIAM
+  ces_cod: 1080
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: NAPO
+  canton: TENA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1080&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1012'
+  nombre: Universidad Técnica Luis Vargas Torres de Esmeraldas (UTLVTE)
+  sigla: UTLVTE
+  ces_cod: 1012
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: ESMERALDAS
+  canton: ESMERALDAS
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1012&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1010'
+  nombre: Universidad Técnica de Ambato
+  sigla: UTA
+  ces_cod: 1010
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: TUNGURAHUA
+  canton: AMBATO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1010&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1013'
+  nombre: Universidad Técnica de Babahoyo
+  sigla: UTB
+  ces_cod: 1013
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: LOS RÍOS
+  canton: BABAHOYO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1013&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1020'
+  nombre: Universidad Técnica de Cotopaxi
+  sigla: UTC
+  ces_cod: 1020
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: COTOPAXI
+  canton: LATACUNGA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1020&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1011'
+  nombre: Universidad Técnica de Machala
+  sigla: UTMACH
+  ces_cod: 1011
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: EL ORO
+  canton: MACHALA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1011&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1009'
+  nombre: Universidad Técnica de Manabí
+  sigla: UTM
+  ces_cod: 1009
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: MANABÍ
+  canton: PORTOVIEJO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1009&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1015'
+  nombre: Universidad Técnica del Norte
+  sigla: UTN
+  ces_cod: 1015
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: IMBABURA
+  canton: IBARRA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1015&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1014'
+  nombre: Universidad Técnica Estatal de Quevedo
+  sigla: UTEQ
+  ces_cod: 1014
+  ces_codp: 328
+  tipo_institucional: pública
+  financiamiento: pública
+  provincia: LOS RÍOS
+  canton: QUEVEDO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1014&codp=328
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '3027'
+  nombre: Universidad Bolivariana del Ecuador
+  sigla: UBE
+  ces_cod: 3027
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: GUAYAS
+  canton: DURÁN
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=3027&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1049'
+  nombre: Universidad Casa Grande
+  sigla: UCG
+  ces_cod: 1049
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1049&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1037'
+  nombre: Universidad de Especialidades Espíritu Santo - UEES
+  sigla: UEES
+  ces_cod: 1037
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: GUAYAS
+  canton: SAMBORONDÓN
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1037&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1053'
+  nombre: Universidad de Especialidades Turísticas
+  sigla: UCT
+  ces_cod: 1053
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1053&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1040'
+  nombre: Universidad de las Américas
+  sigla: UDLA
+  ces_cod: 1040
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1040&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1070'
+  nombre: Universidad de los Hemisferios
+  sigla: UH
+  ces_cod: 1070
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1070&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1059'
+  nombre: Universidad de Otavalo
+  sigla: UOTAVALO
+  ces_cod: 1059
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: IMBABURA
+  canton: OTAVALO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1059&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1044'
+  nombre: Universidad del Pacífico-Escuela de Negocios
+  sigla: UPACIFICO
+  ces_cod: 1044
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1044&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '3013'
+  nombre: Universidad del Río-UDR
+  sigla: UDR
+  ces_cod: 3013
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=3013&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1073'
+  nombre: Universidad Iberoamericana del Ecuador
+  sigla: UNIBE
+  ces_cod: 1073
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1073&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1041'
+  nombre: Universidad Internacional del Ecuador (UIDE)
+  sigla: UIDE
+  ces_cod: 1041
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1041&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1056'
+  nombre: Universidad Metropolitana
+  sigla: UMET
+  ces_cod: 1056
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1056&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1036'
+  nombre: Universidad Particular Internacional SEK
+  sigla: SEK
+  ces_cod: 1036
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1036&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1042'
+  nombre: Universidad Regional Autónoma de los Andes UNIANDES
+  sigla: UNIANDES
+  ces_cod: 1042
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: TUNGURAHUA
+  canton: AMBATO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1042&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1038'
+  nombre: Universidad San Francisco de Quito USFQ
+  sigla: USFQ
+  ces_cod: 1038
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1038&codp=1540
+  base_url: https://www.usfq.edu.ec
+  portal_url: https://www.usfq.edu.ec
+  endpoints:
+    robots_txt: https://www.usfq.edu.ec/robots.txt
+    facultades: https://www.usfq.edu.ec/colegios-y-unidades-academicas
+    autoridades: https://www.usfq.edu.ec/autoridades
+    noticias_web: https://www.usfq.edu.ec/sala-de-prensa
+    noticias_api: https://www.usfq.edu.ec/wp-json/wp/v2/posts
+    wp_categories: https://www.usfq.edu.ec/wp-json/wp/v2/categories
+    oferta_grado: https://www.usfq.edu.ec/oferta-academica
+  adaptador: wordpress
+  estado_integracion: piloto
+  observaciones: 'Portal WordPress; piloto para prueba de cobertura P1, P2 y P3. Alias
+    legacy: USFQ.'
+- id: '1060'
+  nombre: Universidad San Gregorio de Portoviejo
+  sigla: USGP
+  ces_cod: 1060
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: MANABÍ
+  canton: PORTOVIEJO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1060&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1077'
+  nombre: Universidad Tecnológica ECOTEC
+  sigla: ECOTEC
+  ces_cod: 1077
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: GUAYAS
+  canton: SAMBORONDÓN
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1077&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1050'
+  nombre: Universidad Tecnológica Empresarial de Guayaquil
+  sigla: UTEG
+  ces_cod: 1050
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1050&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1045'
+  nombre: Universidad Tecnológica Indoamérica
+  sigla: UTI
+  ces_cod: 1045
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: TUNGURAHUA
+  canton: AMBATO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1045&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1051'
+  nombre: Universidad Tecnológica Israel
+  sigla: UISRAEL
+  ces_cod: 1051
+  ces_codp: 1540
+  tipo_institucional: particular_autofinanciada
+  financiamiento: particular_autofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1051&codp=1540
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1027'
+  nombre: Pontificia Universidad Católica del Ecuador
+  sigla: PUCE
+  ces_cod: 1027
+  ces_codp: 5398
+  tipo_institucional: particular_cofinanciada
+  financiamiento: particular_cofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1027&codp=5398
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1029'
+  nombre: Universidad Católica de Cuenca
+  sigla: UCACUE
+  ces_cod: 1029
+  ces_codp: 5398
+  tipo_institucional: particular_cofinanciada
+  financiamiento: particular_cofinanciada
+  provincia: AZUAY
+  canton: CUENCA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1029&codp=5398
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1028'
+  nombre: Universidad Católica de Santiago de Guayaquil (UCSG)
+  sigla: UCSG
+  ces_cod: 1028
+  ces_codp: 5398
+  tipo_institucional: particular_cofinanciada
+  financiamiento: particular_cofinanciada
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1028&codp=5398
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1033'
+  nombre: Universidad del Azuay
+  sigla: UDA
+  ces_cod: 1033
+  ces_codp: 5398
+  tipo_institucional: particular_cofinanciada
+  financiamiento: particular_cofinanciada
+  provincia: AZUAY
+  canton: CUENCA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1033&codp=5398
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1030'
+  nombre: Universidad Laica Vicente Rocafuerte de Guayaquil
+  sigla: ULVR
+  ces_cod: 1030
+  ces_codp: 5398
+  tipo_institucional: particular_cofinanciada
+  financiamiento: particular_cofinanciada
+  provincia: GUAYAS
+  canton: GUAYAQUIL
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1030&codp=5398
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1034'
+  nombre: Universidad Politécnica Salesiana - UPS
+  sigla: UPS
+  ces_cod: 1034
+  ces_codp: 5398
+  tipo_institucional: particular_cofinanciada
+  financiamiento: particular_cofinanciada
+  provincia: AZUAY
+  canton: CUENCA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1034&codp=5398
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1031'
+  nombre: Universidad Técnica Particular de Loja
+  sigla: UTPL
+  ces_cod: 1031
+  ces_codp: 5398
+  tipo_institucional: particular_cofinanciada
+  financiamiento: particular_cofinanciada
+  provincia: LOJA
+  canton: LOJA
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1031&codp=5398
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.
+- id: '1032'
+  nombre: Universidad UTE
+  sigla: UTE
+  ces_cod: 1032
+  ces_codp: 5398
+  tipo_institucional: particular_cofinanciada
+  financiamiento: particular_cofinanciada
+  provincia: PICHINCHA
+  canton: DISTRITO METROPOLITANO DE QUITO
+  ces_url: https://www.ces.gob.ec/?page_id=25&cod=1032&codp=5398
+  base_url: ''
+  portal_url: ''
+  endpoints: {}
+  adaptador: pendiente
+  estado_integracion: pendiente
+  observaciones: Portal no validado; requiere Fase 3.

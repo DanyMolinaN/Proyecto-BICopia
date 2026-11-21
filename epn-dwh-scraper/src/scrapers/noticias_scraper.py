@@ -114,8 +114,8 @@ class NoticiasScraper(BaseScraper):
 
     def __init__(self, http_client=None, institucion_id=None,
                  anio_inicio: int = 2024, anio_fin: int = 2025,
-                 max_paginas: int = 50) -> None:
-        super().__init__(http_client=http_client, institucion_id=institucion_id)
+                 max_paginas: int = 50, institucion=None) -> None:
+        super().__init__(http_client=http_client, institucion_id=institucion_id, institucion=institucion)
         self.anio_inicio = anio_inicio
         self.anio_fin = anio_fin
         self.max_paginas = max_paginas
@@ -170,13 +170,20 @@ class NoticiasScraper(BaseScraper):
         from src.config import settings as cfg
         from src.instituciones import registry
 
-        inst = registry.get(self.institucion_id)
-        if inst:
+        inst = self.institucion or registry.get(self.institucion_id)
+        if inst and inst.base_url:
             api_url = inst.get_endpoint("noticias_api") or f"{inst.base_url}/wp-json/wp/v2/posts"
             base_url = inst.base_url
+        elif inst:
+            api_url = inst.get_endpoint("noticias_api") or ""
+            base_url = inst.base_url or cfg.base_url
         else:
             api_url = cfg.endpoints.get("noticias_api", f"{cfg.base_url}/wp-json/wp/v2/posts")
             base_url = cfg.base_url
+
+        if not api_url:
+            self.logger.warning(f"[{self.institucion_id}] Sin endpoint noticias_api configurado.")
+            return []
 
         after = f"{self.anio_inicio}-01-01T00:00:00"
         before = f"{self.anio_fin}-12-31T23:59:59"

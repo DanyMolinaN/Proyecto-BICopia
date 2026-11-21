@@ -37,6 +37,7 @@ class HttpClient:
         force_refresh: bool = False,
         institucion_id: str = "EPN",
         run_id: Optional[str] = None,
+        per_institution_raw: bool = False,
     ) -> None:
         """Inicializa la sesion HTTP, el parser de robots.txt y el control de frecuencia.
 
@@ -45,10 +46,12 @@ class HttpClient:
             force_refresh (bool): Si es True, ignora la cache existente (--force-refresh).
             institucion_id (str): IES activa para trazabilidad en manifiesto.
             run_id (Optional[str]): Identificador único de ejecución.
+            per_institution_raw (bool): Si es True, versiona en data/raw/<fecha>/<institucion_id>/.
         """
         self.force_refresh = force_refresh
         self.institucion_id = institucion_id
         self.run_id = run_id or datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+        self.per_institution_raw = per_institution_raw
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": settings.user_agent,
@@ -127,6 +130,18 @@ class HttpClient:
         url_hash = hashlib.md5(url.encode("utf-8")).hexdigest()[:10]
         filename = f"{slug}_{url_hash}.{extension}"
 
+        # 0. Si per_institution_raw está activo: data/raw/<fecha>/<institucion_id>/
+        if getattr(self, "per_institution_raw", False) and getattr(self, "institucion_id", None):
+            try:
+                inst_dir = self.dated_raw_dir / str(self.institucion_id)
+                inst_dir.mkdir(parents=True, exist_ok=True)
+                inst_path = inst_dir / filename
+                if inst_path.exists():
+                    return inst_path
+                return inst_path
+            except Exception:
+                pass
+
         # 1. Si existe en el directorio versionado, devolverlo
         try:
             dated_path = self.dated_raw_dir / filename
@@ -161,6 +176,8 @@ class HttpClient:
         try:
             sha256 = hashlib.sha256(content.encode("utf-8", errors="ignore")).hexdigest()
             now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+            # 1. Manifiesto en dated_raw_dir (compatibilidad con tests existentes)
             manifest_path = self.dated_raw_dir / "manifest.csv"
             write_header = not manifest_path.exists()
             with open(manifest_path, "a", newline="", encoding="utf-8") as f:
@@ -168,6 +185,18 @@ class HttpClient:
                 if write_header:
                     writer.writerow(["url", "estado_http", "fecha_descarga", "sha256", "institucion_id", "run_id"])
                 writer.writerow([url, status_code, now_iso, sha256, self.institucion_id, self.run_id])
+
+            # 2. Si per_institution_raw está activo, registrar también en data/raw/<fecha>/<institucion_id>/manifest.csv
+            if getattr(self, "per_institution_raw", False) and getattr(self, "institucion_id", None):
+                inst_dir = self.dated_raw_dir / str(self.institucion_id)
+                inst_dir.mkdir(parents=True, exist_ok=True)
+                inst_manifest_path = inst_dir / "manifest.csv"
+                write_inst_header = not inst_manifest_path.exists()
+                with open(inst_manifest_path, "a", newline="", encoding="utf-8") as f:
+                    writer = csv.writer(f)
+                    if write_inst_header:
+                        writer.writerow(["url", "estado_http", "fecha_descarga", "sha256", "institucion_id", "run_id"])
+                    writer.writerow([url, status_code, now_iso, sha256, self.institucion_id, self.run_id])
         except Exception as exc:
             logger.warning(f"No se pudo escribir en manifest.csv: {exc}")
 

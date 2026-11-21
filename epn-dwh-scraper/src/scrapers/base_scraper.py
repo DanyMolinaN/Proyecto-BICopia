@@ -51,6 +51,7 @@ class BaseScraper(ABC):
         self,
         http_client: Optional[HttpClient] = None,
         institucion_id: Optional[str] = None,
+        institucion: Optional[Any] = None,
     ) -> None:
         """Inicializa el extractor con cliente HTTP y logger especializado.
 
@@ -58,11 +59,22 @@ class BaseScraper(ABC):
             http_client (Optional[HttpClient]): Instancia inyectable del cliente HTTP.
             institucion_id (Optional[str]): ID de la institución a extraer.
                 Si se omite, se usa la EPN (compatibilidad hacia atrás).
+            institucion (Optional[Any]): Instancia de InstitucionConfig con
+                base_url, endpoints y adaptador inyectados directamente.
         """
         self.http_client = http_client or HttpClient()
         self.logger = setup_logger(self.__class__.__name__)
         self.interim_dir = settings.data_interim_dir
-        self.institucion_id: str = institucion_id or self._DEFAULT_INSTITUCION_ID
+        
+        # Resolver configuración de institución (regla 2: no depender solo de config global)
+        from src.instituciones import registry
+        self.institucion = institucion
+        if self.institucion:
+            self.institucion_id = self.institucion.id
+        else:
+            self.institucion_id = institucion_id or self._DEFAULT_INSTITUCION_ID
+            self.institucion = registry.get(self.institucion_id)
+
         self._run_id: str = _RUN_ID
 
     @abstractmethod
