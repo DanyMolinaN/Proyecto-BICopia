@@ -1,0 +1,146 @@
+# Registro de instituciones de educación superior para el scraper multi-institución
+# Formato: id, nombre, sigla, tipo_institucional, financiamiento, base_url, endpoints, adaptador, estado_integracion
+
+instituciones:
+
+  # ─────────────────────────────────────────────────────────────
+  # INSTITUCIÓN HABILITADA (prototipo original)
+  # ─────────────────────────────────────────────────────────────
+  - id: "EPN"
+    nombre: "Escuela Politécnica Nacional"
+    sigla: "EPN"
+    tipo_institucional: "pública"
+    financiamiento: "pública"
+    base_url: "https://www.epn.edu.ec"
+    endpoints:
+      robots_txt: "https://www.epn.edu.ec/robots.txt"
+      facultades: "https://www.epn.edu.ec/facultades/"
+      oferta_grado: "https://www.epn.edu.ec/oferta-de-grado/"
+      oferta_posgrado: "https://www.epn.edu.ec/oferta-de-posgrado/"
+      autoridades: "https://www.epn.edu.ec/autoridades/"
+      historia: "https://www.epn.edu.ec/historia/"
+      nosotros: "https://www.epn.edu.ec/nosotros/"
+      investigacion_cifras: "https://www.epn.edu.ec/investigacion-en-cifras/"
+      noticias_web: "https://www.epn.edu.ec/noticias/"
+      noticias_api: "https://www.epn.edu.ec/wp-json/wp/v2/posts"
+      wp_categories: "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+    adaptador: "wordpress"
+    estado_integracion: "habilitada"
+    observaciones: "Prototipo original; portal WordPress; datos 2024-2026."
+
+  # ─────────────────────────────────────────────────────────────
+  # INSTITUCIONES PILOTO (prueba de cobertura multi-institución)
+  # ─────────────────────────────────────────────────────────────
+  - id: "ESPE"
+    nombre: "Universidad de las Fuerzas Armadas ESPE"
+    sigla: "ESPE"
+    tipo_institucional: "pública"
+    financiamiento: "pública"
+    base_url: "https://www.espe.edu.ec"
+    endpoints:
+      robots_txt: "https://www.espe.edu.ec/robots.txt"
+      facultades: "https://www.espe.edu.ec/facultades/"
+      autoridades: "https://www.espe.edu.ec/autoridades/"
+      noticias_web: "https://www.espe.edu.ec/noticias/"
+      noticias_api: "https://www.espe.edu.ec/wp-json/wp/v2/posts"
+      wp_categories: "https://www.espe.edu.ec/wp-json/wp/v2/categories"
+    adaptador: "wordpress"
+    estado_integracion: "piloto"
+    observaciones: "Portal WordPress; piloto para prueba de cobertura P2 y P3."
+
+  - id: "USFQ"
+    nombre: "Universidad San Francisco de Quito"
+    sigla: "USFQ"
+    tipo_institucional: "particular autofinanciada"
+    financiamiento: "particular_autofinanciada"
+    base_url: "https://www.usfq.edu.ec"
+    endpoints:
+      robots_txt: "https://www.usfq.edu.ec/robots.txt"
+      facultades: "https://www.usfq.edu.ec/colegios-y-unidades-academicas"
+      autoridades: "https://www.usfq.edu.ec/autoridades"
+      noticias_web: "https://www.usfq.edu.ec/noticias"
+      noticias_api: "https://www.usfq.edu.ec/wp-json/wp/v2/posts"
+      wp_categories: "https://www.usfq.edu.ec/wp-json/wp/v2/categories"
+    adaptador: "wordpress"
+    estado_integracion: "piloto"
+    observaciones: "Portal WordPress; piloto para prueba de cobertura P1, P2 y P3."
+
+  # ─────────────────────────────────────────────────────────────
+  # INSTITUCIONES PENDIENTES (alcance nacional — sin URLs verificadas)
+  # ─────────────────────────────────────────────────────────────
+  - id: "UCE"
+    nombre: "Universidad Central del Ecuador"
+    sigla: "UCE"
+    tipo_institucional: "pública"
+    financiamiento: "pública"
+    base_url: "https://www.uce.edu.ec"
+    endpoints: {}
+    adaptador: "pendiente"
+    estado_integracion: "pendiente"
+    observaciones: "URLs de endpoints no verificadas; requiere auditoría antes de habilitar."
+
+  - id: "UTPL"
+    nombre: "Universidad Técnica Particular de Loja"
+    sigla: "UTPL"
+    tipo_institucional: "particular cofinanciada"
+    financiamiento: "particular_cofinanciada"
+    base_url: "https://www.utpl.edu.ec"
+    endpoints: {}
+    adaptador: "pendiente"
+    estado_integracion: "pendiente"
+    observaciones: "URLs de endpoints no verificadas."
+
+  - id: "PUCE"
+    nombre: "Pontificia Universidad Católica del Ecuador"
+    sigla: "PUCE"
+    tipo_institucional: "particular cofinanciada"
+    financiamiento: "particular_cofinanciada"
+    base_url: "https://www.puce.edu.ec"
+    endpoints: {}
+    adaptador: "pendiente"
+    estado_integracion: "pendiente"
+    observaciones: "URLs de endpoints no verificadas."
+
+  - id: "UG"
+    nombre: "Universidad de Guayaquil"
+    sigla: "UG"
+    tipo_institucional: "pública"
+    financiamiento: "pública"
+    base_url: "https://www.ug.edu.ec"
+    endpoints: {}
+    adaptador: "pendiente"
+    estado_integracion: "pendiente"
+    observaciones: "URLs de endpoints no verificadas."
+
+  - id: "ESPOL"
+    nombre: "Escuela Superior Politécnica del Litoral"
+    sigla: "ESPOL"
+    tipo_institucional: "pública"
+    financiamiento: "pública"
+    base_url: "https://www.espol.edu.ec"
+    endpoints: {}
+    adaptador: "pendiente"
+    estado_integracion: "pendiente"
+    observaciones: "URLs de endpoints no verificadas."
+
+  - id: "ESPOCH"
+    nombre: "Escuela Superior Politécnica de Chimborazo"
+    sigla: "ESPOCH"
+    tipo_institucional: "pública"
+    financiamiento: "pública"
+    base_url: "https://www.espoch.edu.ec"
+    endpoints: {}
+    adaptador: "pendiente"
+    estado_integracion: "pendiente"
+    observaciones: "URLs de endpoints no verificadas."
+
+  - id: "UTN"
+    nombre: "Universidad Técnica del Norte"
+    sigla: "UTN"
+    tipo_institucional: "pública"
+    financiamiento: "pública"
+    base_url: "https://www.utn.edu.ec"
+    endpoints: {}
+    adaptador: "pendiente"
+    estado_integracion: "pendiente"
+    observaciones: "URLs de endpoints no verificadas."
