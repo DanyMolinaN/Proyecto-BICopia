@@ -331,7 +331,7 @@ def main() -> None:
         modulos_list = ["ces", "noticias", "autoridades", "oferta"] if args.modulo == "todos" else [args.modulo]
         # Determinar si se pasó institución específica (distinta del default EPN si el usuario no la especificó)
         # Para detectar si el usuario pasó --institucion explícitamente:
-        inst_especifica = [args.institucion] if "--institucion" in sys.argv else None
+        inst_especifica = [x.strip() for x in args.institucion.split(",")] if "--institucion" in sys.argv else None
         
         runner = Ces64Runner(
             modulos=modulos_list,
