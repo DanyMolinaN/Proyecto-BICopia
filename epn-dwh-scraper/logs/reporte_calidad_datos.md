@@ -12,7 +12,7 @@ El presente reporte consolida los controles aplicados sobre el conjunto de dimen
 | dim_nivel_formacion | 4 | 0 | 0 | CONFORME |
 | dim_modalidad | 2 | 0 | 0 | CONFORME |
 | fact_oferta_academica | 46 | 0 | 152 | OBSERVACIONES DETECTADAS |
-| dim_autoridad | 10 | 0 | 20 | CONFORME |
+| dim_autoridad | 10 | 0 | 30 | CONFORME |
 | dim_cargo | 10 | 0 | 0 | CONFORME |
 | fact_designacion_autoridades | 10 | 0 | 17 | CONFORME |
 | dim_categoria_noticia | 26 | 0 | 0 | CONFORME |
@@ -55,6 +55,7 @@ El presente reporte consolida los controles aplicados sobre el conjunto de dimen
 - Info: es_acreditada sin dato en 46 de 46 registros (100%).
 
 ### dim_autoridad
+- Info: titulo_academico sin dato en 10 de 10 registros (100%).
 - Info: correo_contacto sin dato en 10 de 10 registros (100%).
 - Info: biografia sin dato en 10 de 10 registros (100%).
 
@@ -62,9 +63,9 @@ El presente reporte consolida los controles aplicados sobre el conjunto de dimen
 - Todos los controles de integridad, tipo de dato y unicidad resultaron conformes.
 
 ### fact_designacion_autoridades
-- Info: facultad_key sin dato en 1 de 10 registros (10%).
-- Info: es_titular sin dato en 8 de 10 registros (80%).
-- Info: evidencia_condicion sin dato en 8 de 10 registros (80%).
+- Info: facultad_key sin dato en 3 de 10 registros (30%).
+- Info: evidencia_condicion sin dato en 7 de 10 registros (70%).
+- Info: es_titular sin dato en 7 de 10 registros (70%).
 
 ### dim_categoria_noticia
 - Todos los controles de integridad, tipo de dato y unicidad resultaron conformes.

@@ -78,11 +78,9 @@ class CesPerfilScraper(BaseScraper):
     # ------------------------------------------------------------------
     # Parseo de la ficha del CES
     # ------------------------------------------------------------------
-    def _parse_ficha(self, html: str, url: str, row: Dict[str, str]) -> Dict[str, Any]:
-        """Extrae los campos de una ficha institucional del CES.
 
-        Returns un dict con estado_extraccion in {ok, parcial, error}.
-        """
+    def _parse_ficha(self, html: str, url: str, row: Dict[str, str]) -> Dict[str, Any]:
+        """Extrae los campos de una ficha institucional del CES."""
         rec: Dict[str, Any] = {
             "ces_cod": row["ces_cod"],
             "ces_codp": row["ces_codp"],
@@ -91,7 +89,6 @@ class CesPerfilScraper(BaseScraper):
             "provincia_catalogo": row["provincia"],
             "canton_catalogo": row["canton"],
             "ces_url": url,
-            # Campos extraídos (NULL hasta confirmar)
             "nombre_ces": None,
             "sede": None,
             "siglas_ces": None,
@@ -110,85 +107,112 @@ class CesPerfilScraper(BaseScraper):
         try:
             soup = BeautifulSoup(html, "html.parser")
             entry = soup.find("div", class_="entry-content") or soup
-            lines = [l.strip() for l in entry.get_text("\n").splitlines() if l.strip()]
 
-            # Estrategia 1: Parseo secuencial de líneas en entry-content del CES
+            # Normaliza las etiquetas para tolerar mayúsculas y tildes.
+            def normalizar_clave(value: str) -> str:
+                return _normalize(value).replace(":", "").strip()
+
+            # Relaciona las etiquetas del CES con los campos del registro.
+            aliases = {
+                "NOMBRE": "nombre_ces",
+                "INSTITUCION": "nombre_ces",
+                "IES": "nombre_ces",
+                "SIGLAS": "siglas_ces",
+                "SIGLA": "siglas_ces",
+                "SEDE": "sede",
+                "DIRECCION": "direccion",
+                "DOMICILIO": "direccion",
+                "FECHA CREACION": "fecha_creacion",
+                "FECHA DE CREACION": "fecha_creacion",
+                "TIPO": "tipo_institucional_ces",
+                "TIPO INSTITUCIONAL": "tipo_institucional_ces",
+                "RECTOR": "rector_nombre",
+                "RECTORA": "rector_nombre",
+                "RECTOR/A": "rector_nombre",
+                "REPRESENTANTE LEGAL": "rector_nombre",
+                "CARGO": "cargo_rector_original",
+                "INICIO DE GESTION": "fecha_inicio_gestion",
+                "FECHA INICIO GESTION": "fecha_inicio_gestion",
+                "FECHA DE INICIO GESTION": "fecha_inicio_gestion",
+                "FIN DE GESTION": "fecha_fin_gestion",
+                "FECHA FIN DE GESTION": "fecha_fin_gestion",
+                "FECHA DE FIN DE GESTION": "fecha_fin_gestion",
+            }
+
+            # Estrategia 1: filas de tablas con etiquetas th/td.
+            for tr in entry.find_all("tr"):
+                cells = tr.find_all(["th", "td"], recursive=False)
+                if len(cells) >= 2:
+                    key = normalizar_clave(cells[0].get_text(" ", strip=True))
+                    value = cells[1].get_text(" ", strip=True)
+                    field = aliases.get(key)
+
+                    if field and value and not rec[field]:
+                        rec[field] = value
+
+            # Estrategia 2: párrafos con formato ETIQUETA: VALOR.
+            # Se recorren los párrafos individualmente para no concatenarlos.
+            for element in entry.find_all(["p", "li"]):
+                content = element.get_text(" ", strip=True)
+                match = re.match(r"^([^:]{2,60}):\s*(.+)$", content)
+
+                if match:
+                    key = normalizar_clave(match.group(1))
+                    value = match.group(2).strip()
+                    field = aliases.get(key)
+
+                    if field and value and not rec[field]:
+                        rec[field] = value
+
+            # Estrategia 3: formato secuencial antiguo del CES.
+            lines = [
+                line.strip()
+                for line in entry.get_text("\n").splitlines()
+                if line.strip()
+            ]
+
             for i, line in enumerate(lines):
-                norm = line.upper().rstrip(":")
-                if norm == "IES" and i + 1 < len(lines):
+                key = normalizar_clave(line)
+
+                if key == "IES" and i + 1 < len(lines):
                     if not rec["nombre_ces"]:
                         rec["nombre_ces"] = lines[i + 1]
+
                     if i > 0 and not rec["tipo_institucional_ces"]:
-                        prev = lines[i - 1].strip()
-                        if any(t in prev.upper() for t in ("PÚBLICA", "PUBLICA", "PARTICULAR", "COFINANCIADA", "AUTOFINANCIADA")):
-                            rec["tipo_institucional_ces"] = prev
-                elif norm.startswith("SEDE") and not rec["sede"]:
-                    rec["sede"] = line
-                elif norm == "SIGLAS" and i + 1 < len(lines) and not rec["siglas_ces"]:
-                    rec["siglas_ces"] = lines[i + 1]
-                elif norm == "DIRECCIÓN" and i + 1 < len(lines) and not rec["direccion"]:
-                    rec["direccion"] = lines[i + 1]
-                elif norm in ("FECHA CREACIÓN", "FECHA DE CREACIÓN", "FECHA CREACION") and i + 1 < len(lines):
-                    rec["fecha_creacion"] = lines[i + 1]
-                elif norm in ("RECTOR/A", "RECTOR", "RECTORA") and i + 1 < len(lines):
-                    rec["cargo_rector_original"] = line
-                    rec["rector_nombre"] = lines[i + 1]
-                elif norm in ("FECHA DE INICIO GESTIÓN", "FECHA INICIO GESTIÓN", "FECHA INICIO GESTION", "FECHA DE INICIO GESTION") and i + 1 < len(lines):
-                    rec["fecha_inicio_gestion"] = lines[i + 1]
-                elif norm in ("FECHA FIN DE GESTIÓN", "FECHA FIN GESTIÓN", "FECHA FIN GESTION", "FECHA DE FIN GESTION") and i + 1 < len(lines):
-                    rec["fecha_fin_gestion"] = lines[i + 1]
+                        previous = lines[i - 1]
+                        if any(
+                            term in _normalize(previous)
+                            for term in (
+                                "PUBLICA",
+                                "PARTICULAR",
+                                "COFINANCIADA",
+                                "AUTOFINANCIADA",
+                            )
+                        ):
+                            rec["tipo_institucional_ces"] = previous
 
-            # Estrategia 2 (Fallback si campos clave faltan): Tablas con th/td o divs
-            if not rec["nombre_ces"] or not rec["rector_nombre"]:
-                kv: Dict[str, str] = {}
-                for tr in soup.find_all("tr"):
-                    cells = tr.find_all(["th", "td"])
-                    if len(cells) >= 2:
-                        key = cells[0].get_text(strip=True).lower()
-                        val = cells[1].get_text(separator=" ", strip=True)
-                        kv[key] = val
+                elif key in aliases:
+                    field = aliases[key]
+                    if i + 1 < len(lines) and not rec[field]:
+                        rec[field] = lines[i + 1]
 
-                for p in soup.find_all(["p", "div", "span", "li"]):
-                    text = p.get_text(separator="|", strip=True)
-                    m = re.match(r"^([^:|]{3,40})[:|]\s*(.+)$", text)
-                    if m:
-                        key = m.group(1).strip().lower()
-                        val = m.group(2).strip()
-                        if key not in kv:
-                            kv[key] = val
-
-                def _get(*keys: str) -> Optional[str]:
-                    for k in keys:
-                        for stored_k, v in kv.items():
-                            if k in stored_k:
-                                return v.strip() or None
-                    return None
-
-                if not rec["nombre_ces"]:
-                    rec["nombre_ces"] = _get("nombre", "institución", "institucion")
-                if not rec["rector_nombre"]:
-                    rec["rector_nombre"] = _get("rector", "representante legal", "autoridad")
-                if not rec["fecha_inicio_gestion"]:
-                    rec["fecha_inicio_gestion"] = _get("inicio de gestión", "inicio gestión", "fecha inicio")
-                if not rec["fecha_fin_gestion"]:
-                    rec["fecha_fin_gestion"] = _get("fin de gestión", "fin gestión", "fecha fin")
-                if not rec["siglas_ces"]:
-                    rec["siglas_ces"] = _get("sigla", "abreviatura", "acrónimo")
-                if not rec["direccion"]:
-                    rec["direccion"] = _get("dirección", "direccion", "domicilio")
-
-            # Validación de nombre (normalización de tildes y mayúsculas)
+            # Validación del nombre contra el catálogo.
             if rec["nombre_ces"]:
-                norm_ces = _normalize(rec["nombre_ces"])
-                norm_cat = _normalize(row["nombre"])
-                rec["discrepancia_nombre"] = norm_ces != norm_cat
+                rec["discrepancia_nombre"] = (
+                    _normalize(rec["nombre_ces"]) != _normalize(row["nombre"])
+                )
                 rec["estado_extraccion"] = "ok"
             else:
-                campos_ok = sum(1 for f in [
-                    rec["sede"], rec["rector_nombre"],
-                    rec["fecha_inicio_gestion"]
-                ] if f)
-                rec["estado_extraccion"] = "parcial" if campos_ok > 0 else "error"
+                campos_ok = sum(
+                    1
+                    for field in (
+                        "sede",
+                        "rector_nombre",
+                        "fecha_inicio_gestion",
+                    )
+                    if rec[field]
+                )
+                rec["estado_extraccion"] = "parcial" if campos_ok else "error"
                 rec["motivo_error"] = "nombre_no_extraido"
 
         except Exception as exc:

@@ -147,11 +147,16 @@ def _load_portales() -> Dict[str, Dict[str, str]]:
 def _urls_for(portal: Optional[Dict[str, str]], module: str) -> List[str]:
     if not portal:
         return []
-    try:
-        return json.loads(portal.get(f"url_{module}_urls", "[]"))
-    except (TypeError, json.JSONDecodeError):
-        return [portal[f"url_{module}"]] if portal.get(f"url_{module}") else []
-
+    raw_urls = portal.get(f"url_{module}_urls")
+    if raw_urls:
+        try:
+            urls = json.loads(raw_urls)
+            if isinstance(urls, list) and urls:
+                return urls
+        except (TypeError, json.JSONDecodeError):
+            pass
+    single_url = portal.get(f"url_{module}")
+    return [single_url] if single_url else []
 
 # ---------------------------------------------------------------------------
 # Enriquecimiento de InstitucionConfig con fuentes de la matriz
@@ -230,26 +235,34 @@ def _build_inst_from_portal(
 # Determinación del estado de módulo
 # ---------------------------------------------------------------------------
 
+
+
 def _estado_modulo(inst: InstitucionConfig, modulo: str, portal: Optional[Dict]) -> str:
     """Decide el estado inicial de un módulo antes de ejecutarlo."""
     if modulo == "ces":
         return "pendiente"
 
     if not portal:
-        return "sin_fuente"
+        return "sin_seccion"
 
-    if modulo in ("noticias", "autoridades", "oferta", "facultades", "docentes") and not _urls_for(portal, modulo):
-        if modulo == "noticias" and portal.get("portal_url"):
-            return "pendiente"  # permite descubrir un archivo desde la portada oficial
-        return "sin_fuente"
-
-    robots = portal.get("robots_permite", "si")
-    if robots == "no":
+    # Robots tiene prioridad sobre la disponibilidad de las secciones.
+    if portal.get("robots_permite") == "no":
         return "bloqueado_robots"
 
-    # La matriz puede tener URLs candidatas o pendientes de validación de contenido;
-    # solo se solicita una página cuando contiene una URL HTTPS del dominio oficial.
+    if modulo in ("noticias", "autoridades", "oferta", "facultades", "docentes"):
+        urls = _urls_for(portal, modulo)
+
+        if not urls:
+            if modulo == "noticias" and portal.get("portal_url"):
+                return "pendiente"
+            return "sin_seccion"
+
+        # Noticias requiere un adaptador WordPress en esta implementación.
+        if modulo == "noticias" and inst.adaptador != "wordpress":
+            return "sin_adaptador"
+
     return "pendiente"
+
 
 
 # ---------------------------------------------------------------------------

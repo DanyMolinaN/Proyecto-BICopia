@@ -1313,3 +1313,11 @@ a22356a0-c5e8-4cfa-a7dc-01f82ffadaaf,1083,docentes,sin_fuente,0,0,2026-11-22T07:
 4ae928e5-44be-44c5-a1a5-60b3f7fb3ae2,1083,docentes,sin_fuente,0,0,2026-11-22T07:57:52.897922+00:00,2026-11-22T07:57:52.897933+00:00,Pre-chequeo: sin_fuente; PENDIENTE: no se localizó URL específica
 4ae928e5-44be-44c5-a1a5-60b3f7fb3ae2,1083,noticias,parcial,201,52,2026-11-22T07:57:52.898803+00:00,2026-11-22T07:58:50.154689+00:00,Se alcanzó max_paginas=50; revisar cobertura del archivo histórico.
 4ae928e5-44be-44c5-a1a5-60b3f7fb3ae2,1008,oferta,parcial,46,1,2026-11-22T07:58:51.940127+00:00,2026-11-22T07:58:52.332938+00:00,"46 candidatos de programa extraídos; falta validar nivel, modalidad y vigencia."
+,1001,ces,error_http,0,1,,,Connection timeout
+,1002,ces,ok,1,1,,,Ficha CES ok
+,1001,ces,error_http,0,1,,,Connection timeout
+,1002,ces,ok,1,1,,,Ficha CES ok
+,1001,ces,error_http,0,1,,,Connection timeout
+,1002,ces,ok,1,1,,,Ficha CES ok
+,1001,ces,error_http,0,1,,,Connection timeout
+,1002,ces,ok,1,1,,,Ficha CES ok
