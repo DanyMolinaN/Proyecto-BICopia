@@ -44,31 +44,6 @@ class SnieseExtractor(BaseScraper):
         super().__init__(http_client=http_client, institucion_id=institucion_id)
         self.data_file_path = data_file_path
 
-    def _generate_synthetic_baseline_if_missing(self) -> List[Dict[str, Any]]:
-        """Registra la oferta academica oficial referencial de la EPN y pilotos segun catastro CES."""
-        # Datos extraídos del catastro público oficial CES / SNIESE para contraste de calidad
-        catalogo_oficial = [
-            # EPN
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Ingeniería en Software", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-33-No.639-2016", "estado_vigencia": "vigente", "campo_amplio": "Tecnologías de la Información y Comunicación (TIC)"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Ingeniería en Computación", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-28-No.560-2017", "estado_vigencia": "vigente", "campo_amplio": "Tecnologías de la Información y Comunicación (TIC)"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Ingeniería Civil", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-24-No.475-2017", "estado_vigencia": "vigente", "campo_amplio": "Ingeniería, Industria y Construcción"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Ingeniería Mecánica", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-24-No.476-2017", "estado_vigencia": "vigente", "campo_amplio": "Ingeniería, Industria y Construcción"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Ingeniería Eléctrica", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-24-No.477-2017", "estado_vigencia": "vigente", "campo_amplio": "Ingeniería, Industria y Construcción"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Ingeniería Electrónica y Automatización", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-24-No.478-2017", "estado_vigencia": "vigente", "campo_amplio": "Ingeniería, Industria y Construcción"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Ingeniería Química", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-24-No.479-2017", "estado_vigencia": "vigente", "campo_amplio": "Ingeniería, Industria y Construcción"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Licenciatura en Matemática", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-26-No.512-2017", "estado_vigencia": "vigente", "campo_amplio": "Ciencias Naturales, Matemáticas y Estadística"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Licenciatura en Física", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-26-No.513-2017", "estado_vigencia": "vigente", "campo_amplio": "Ciencias Naturales, Matemáticas y Estadística"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Maestría en Computación", "nivel_formacion": "Cuarto Nivel", "nivel_detalle": "Maestria", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-08-No.152-2019", "estado_vigencia": "vigente", "campo_amplio": "Tecnologías de la Información y Comunicación (TIC)"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Doctorado en Informática", "nivel_formacion": "Cuarto Nivel", "nivel_detalle": "Doctorado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-12-No.220-2018", "estado_vigencia": "vigente", "campo_amplio": "Tecnologías de la Información y Comunicación (TIC)"},
-            {"institucion_id": "EPN", "institucion_nombre": "Escuela Politécnica Nacional", "carrera_programa": "Tecnología Superior en Desarrollo de Software", "nivel_formacion": "Tercer Nivel Técnico-Tecnológico", "nivel_detalle": "Tecnologia", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-15-No.280-2019", "estado_vigencia": "vigente", "campo_amplio": "Tecnologías de la Información y Comunicación (TIC)"},
-            # ESPE (Piloto)
-            {"institucion_id": "ESPE", "institucion_nombre": "Universidad de las Fuerzas Armadas ESPE", "carrera_programa": "Ingeniería en Tecnologías de la Información", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-10-No.190-2017", "estado_vigencia": "vigente", "campo_amplio": "Tecnologías de la Información y Comunicación (TIC)"},
-            {"institucion_id": "ESPE", "institucion_nombre": "Universidad de las Fuerzas Armadas ESPE", "carrera_programa": "Ingeniería en Software", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "En Línea", "resolucion_ces": "RPC-SO-14-No.255-2018", "estado_vigencia": "vigente", "campo_amplio": "Tecnologías de la Información y Comunicación (TIC)"},
-            # USFQ (Piloto)
-            {"institucion_id": "USFQ", "institucion_nombre": "Universidad San Francisco de Quito", "carrera_programa": "Ingeniería en Sistemas Computacionales", "nivel_formacion": "Tercer Nivel", "nivel_detalle": "Grado", "modalidad": "Presencial", "resolucion_ces": "RPC-SO-18-No.330-2017", "estado_vigencia": "vigente", "campo_amplio": "Tecnologías de la Información y Comunicación (TIC)"},
-        ]
-        return catalogo_oficial
-
     def extract(self) -> List[Dict[str, Any]]:
         """Extrae el catastro de oferta académica oficial de SNIESE/CES.
 

@@ -6,7 +6,7 @@ project:
 
 network:
   base_url: "https://www.epn.edu.ec"
-  user_agent: "Mozilla/5.0 (compatible; AcademicBI-Equipo6/2.0; +https://github.com/DanyMolinaN/epn-dwh-scraper; contacto: bi.equipo6.epn@gmail.com)"
+  user_agent: "Mozilla/5.0 (compatible; AcademicBI-Equipo6/2.1)"
   timeout_seconds: 15
   rate_limit_seconds: 1.0
   max_retries: 4

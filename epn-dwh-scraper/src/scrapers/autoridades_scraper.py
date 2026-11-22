@@ -14,11 +14,12 @@ Mejoras del Hito 2 (Fase D):
 import re
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
+from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 
 from src.config import settings
 from src.scrapers.base_scraper import BaseScraper
-from src.utils.helpers import clean_text, extract_email, remove_accents
+from src.utils.helpers import clean_text, remove_accents
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -31,7 +32,12 @@ _CARGO_CATALOGO = [
     (["decano", "decana"], "Decano"),
     (["subdecano", "subdecana"], "Subdecano"),
     (["director", "directora"], "Director"),
-    (["secretario", "secretaria"], "Otro"),
+    (["canciller"], "Canciller"),
+    (["gerente"], "Gerente"),
+    (["coordinador", "coordinadora"], "Coordinador"),
+    (["secretario", "secretaria"], "Secretario"),
+    (["presidente", "presidenta"], "Presidente"),
+    (["consejero", "consejera"], "Consejero"),
 ]
 
 
@@ -42,6 +48,27 @@ def _normalizar_cargo(cargo_texto: str) -> str:
         if any(kw in norma for kw in keywords):
             return normalizado
     return "Otro"
+
+
+def _es_linea_de_cargo(texto: str) -> bool:
+    """Evita tratar una biografía que menciona cargos como si fuera el cargo actual."""
+    norma = remove_accents(clean_text(texto).lower())
+    norma = re.sub(r"^(?:cargo|autoridad)\s*:\s*", "", norma)
+    return bool(re.match(
+        r"^(?:rector(?:a)?|vicerrector(?:a)?|decano(?:a)?|subdecano(?:a)?|"
+        r"director(?:a)?|secretario(?:a)?|secretaria|presidente(?:a)?|"
+        r"canciller|gerente|coordinador(?:a)?|consejero(?:a)?)"
+        r"(?:\b|\s|[-(/])",
+        norma,
+    ))
+
+
+def _es_linea_de_unidad(texto: str) -> bool:
+    """Reconoce rótulos cortos de unidad sin capturar párrafos biográficos."""
+    norma = remove_accents(clean_text(texto).lower())
+    return len(texto) <= 120 and bool(re.match(
+        r"^(?:facultad|escuela|departamento|instituto|sede|campus)\b", norma
+    ))
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -70,14 +97,24 @@ def _detectar_condicion(cargo_texto: str) -> Tuple[str, str]:
 class AutoridadesScraper(BaseScraper):
     """Extrae las autoridades centrales y de unidades academicas de una IES."""
 
-    def __init__(self, http_client=None, institucion_id=None,
-                 facultad_urls: Optional[List[Tuple[str, str]]] = None) -> None:
+    def __init__(
+        self,
+        http_client=None,
+        institucion_id=None,
+        facultad_urls: Optional[List[Tuple[str, str]]] = None,
+        institucion=None,
+    ) -> None:
         """
         Args:
             facultad_urls: Lista de (url, nombre_facultad) suministrada externamente (D4).
                 Si es None, se usa la lista dura de la EPN como respaldo.
+            institucion: Configuración inyectada de la institución (regla 2).
         """
-        super().__init__(http_client=http_client, institucion_id=institucion_id)
+        super().__init__(
+            http_client=http_client,
+            institucion_id=institucion_id,
+            institucion=institucion,
+        )
         self._facultad_urls = facultad_urls  # D4
 
     # D5: fecha de captura
@@ -90,11 +127,17 @@ class AutoridadesScraper(BaseScraper):
         from src.config import settings as cfg
         from src.instituciones import registry
 
-        inst = registry.get(self.institucion_id)
-        if inst:
+        inst = self.institucion or registry.get(self.institucion_id)
+        if inst and inst.base_url:
             url = inst.get_endpoint("autoridades") or f"{inst.base_url}/autoridades/"
+        elif inst:
+            url = inst.get_endpoint("autoridades") or ""
         else:
             url = cfg.endpoints.get("autoridades", f"{cfg.base_url}/autoridades/")
+
+        if not url:
+            self.logger.warning(f"[{self.institucion_id}] Sin URL configurada para autoridades.")
+            return []
 
         html_content = self.http_client.get(url)
         if not html_content:
@@ -147,15 +190,12 @@ class AutoridadesScraper(BaseScraper):
                     current_bio = []
                     continue
 
-            if any(
-                k in text.upper()
-                for k in ["RECTOR", "VICERRECTOR", "VICERRECTORA", "DECANO", "DECANA", "SUBDECANO", "DIRECTOR"]
-            ):
+            if _es_linea_de_cargo(text):
                 if not current_cargo:
                     current_cargo = text
                     continue
 
-            if "Facultad de" in text or "Escuela de Formación" in text:
+            if _es_linea_de_unidad(text):
                 current_unidad = text
                 if not current_cargo:
                     current_cargo = f"Decano(a) - {text}"
@@ -174,16 +214,84 @@ class AutoridadesScraper(BaseScraper):
             )
             authorities.append(rec)
 
+        # Muchos portales publican su rectorado o equipo directivo en tarjetas
+        # HTML con nombre y cargo, no como encabezados seguidos de parrafos.
+        card_nodes = soup.find_all(
+            ["article", "li", "div", "section"],
+            class_=re.compile(r"autoridad|authority|directiv|team|person|profile|member", re.I),
+        )
+        seen_norm = {remove_accents(clean_text(row.get("nombre_completo", "")).lower()) for row in authorities}
+        for card in card_nodes:
+            name_tag = card.find(["h2", "h3", "h4", "h5", "strong", "b"])
+            if not name_tag:
+                continue
+            name = clean_text(name_tag.get_text(" ", strip=True))
+            normalized_name = remove_accents(name.lower())
+            words = re.findall(r"[a-z]+", normalized_name)
+            if not (2 <= len(words) <= 7 and len(name) <= 120):
+                continue
+            if any(word in normalized_name for word in ("rector", "decano", "director", "autoridad", "vicerrector", "canciller")):
+                continue
+            if normalized_name in seen_norm:
+                continue
+
+            cargo = None
+            unidad = "Rectorado / Gobierno Central"
+            for candidate in card.find_all(["h3", "h4", "h5", "p", "span", "strong"]):
+                candidate_text = clean_text(candidate.get_text(" ", strip=True))
+                if candidate is name_tag or candidate_text == name:
+                    continue
+                if _es_linea_de_cargo(candidate_text) and not cargo:
+                    cargo = candidate_text
+                if _es_linea_de_unidad(candidate_text):
+                    unidad = candidate_text
+            if cargo:
+                authorities.append(self._build_record(name=name, cargo=cargo, unidad=unidad, url=url))
+                seen_norm.add(normalized_name)
+
+        # Algunos portales publican la designación vigente dentro de una nota
+        # institucional en vez de mantener un directorio de autoridades. Solo
+        # se aceptan frases explícitas de posesión/nombramiento, con el nombre
+        # y el cargo presentes en el mismo fragmento.
+        page_text = clean_text(soup.get_text(" ", strip=True))
+        appointment_pattern = re.compile(
+            r"(?P<titulo>Dr\.?|Dra\.?|Ing\.?|Mgs?\.?|Mgtr\.?|Lic\.?)\s*"
+            r"(?P<nombre>[A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÑáéíóúñ.'’-]+"
+            r"(?:\s+[A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÑáéíóúñ.'’-]+){1,5})"
+            r"\s*,?\s*(?:Ph\.?\s*D\.?|MSc\.?|MBA)?"
+            r"[^.!?]{0,180}?\b(?:asumió|asume|se posesionó|fue posesionad[oa]|"
+            r"fue nombrad[oa]|ejercerá)[^.!?]{0,100}?\bcomo\s+"
+            r"(?P<cargo>rector(?:a)?|vicerrector(?:a)?)\b",
+            re.IGNORECASE,
+        )
+        period_match = re.search(r"\b(20\d{2})\s*[–—-]\s*(20\d{2})\b", page_text)
+        period = f"{period_match.group(1)}-{period_match.group(2)}" if period_match else None
+        for match in appointment_pattern.finditer(page_text):
+            name = clean_text(f"{match.group('titulo')} {match.group('nombre')}")
+            normalized_name = remove_accents(name.lower())
+            if normalized_name in seen_norm:
+                continue
+            authorities.append(self._build_record(
+                name=name,
+                cargo=match.group("cargo").capitalize(),
+                unidad="Rectorado / Gobierno Central",
+                url=url,
+                periodo_gestion=period,
+            ))
+            seen_norm.add(normalized_name)
+
         return authorities
 
     def _build_record(
-        self, name: str, cargo: str, unidad: str, url: str, bio: Optional[str] = None
+        self, name: str, cargo: str, unidad: str, url: str, bio: Optional[str] = None,
+        periodo_gestion: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Estructura un registro de autoridad con los campos del Hito 2."""
         # D2: cargo normalizado
         cargo_normalizado = _normalizar_cargo(cargo)
         # D1: condición de designación
-        condicion, evidencia = _detectar_condicion(cargo)
+        # Algunas páginas colocan la marca de encargo junto al nombre (p. ej. "Dra. X (e)").
+        condicion, evidencia = _detectar_condicion(f"{cargo} {name}")
         # Mantener es_titular derivado solo con evidencia (D1)
         if condicion == "titular":
             es_titular = 1
@@ -192,30 +300,21 @@ class AutoridadesScraper(BaseScraper):
         else:
             es_titular = None  # no_determinado → NULL
 
-        prefix_match = re.match(r"^(Dr\.|Dra\.|Ing\.|Msc\.|Ph\.D\.|Lic\.)\s*", name)
-        titulo_academico = prefix_match.group(0).strip() if prefix_match else None
-
-        # El correo solo se registra si aparece en la fuente; nunca se infiere
-        email_clean = extract_email(bio) if bio else None
-
         record = {
             "nombre_completo": name,
-            "titulo_academico": titulo_academico,
             "cargo": cargo,                               # Compatibilidad hacia atrás
             "cargo_original": cargo,                      # D2
             "cargo_normalizado": cargo_normalizado,        # D2
             "tipo_cargo": (
-                "Alta Direccion"
-                if any(k in cargo.lower() for k in ["rector", "vicerrector"])
-                else "Decanal"
+                "Decanal" if any(k in cargo.lower() for k in ["decano", "subdecano"])
+                else "Alta Direccion" if any(k in cargo.lower() for k in ["rector", "vicerrector", "canciller", "presidente"])
+                else "Direccion Institucional"
             ),
             "unidad_adscripcion": unidad,
             "condicion_designacion": condicion,            # D1
             "evidencia_condicion": evidencia or None,      # D1
             "es_titular": es_titular,                     # D1 derivado con evidencia
-            "periodo_gestion": None,
-            "correo_contacto": email_clean,
-            "biografia": bio[:800] if bio else None,
+            "periodo_gestion": periodo_gestion,
             "fecha_observacion": self._fecha_observacion,  # D5
             "fuente_url": url,
         }
@@ -229,8 +328,35 @@ class AutoridadesScraper(BaseScraper):
         de lo contrario cae en la lista dura de la EPN como respaldo.
         """
         if self._facultad_urls is not None:
-            # D4: lista provista externamente
-            facultades_urls = self._facultad_urls
+            # D4: URLs de facultades provistas por la matriz. Si es un índice,
+            # descubre sus fichas internas para buscar decanos sin asumir rutas EPN.
+            facultades_urls = []
+            for source_url, source_name in self._facultad_urls:
+                path = source_url.lower().split("?", 1)[0]
+                direct_page = any(token in path for token in ("facultad-", "escuela-", "decanato"))
+                if source_name or direct_page:
+                    facultades_urls.append((source_url, source_name))
+                    continue
+                index_html = self.http_client.get(source_url)
+                discovered = []
+                if index_html:
+                    index_soup = BeautifulSoup(index_html, "html.parser")
+                    official_host = (urlparse(source_url).hostname or "").lower().removeprefix("www.")
+                    for anchor in index_soup.find_all("a", href=True):
+                        label = clean_text(anchor.get_text(" ", strip=True))
+                        target = urljoin(source_url, anchor["href"].strip())
+                        target_path = urlparse(target).path.lower()
+                        target_host = (urlparse(target).hostname or "").lower().removeprefix("www.")
+                        is_faculty = any(token in f"{label.lower()} {target_path}" for token in ("facultad", "decanato", "escuela"))
+                        if (
+                            is_faculty
+                            and not target_path.endswith((".pdf", ".doc", ".docx", ".xls", ".xlsx", ".zip"))
+                            and target_host
+                            and (target_host == official_host or target_host.endswith("." + official_host))
+                            and target != source_url
+                        ):
+                            discovered.append((target, label))
+                facultades_urls.extend(discovered or [(source_url, source_name)])
         elif self.institucion_id == "EPN":
             # Respaldo EPN: lista dura (solo para mantener compatibilidad)
             facultades_urls = [
@@ -249,10 +375,19 @@ class AutoridadesScraper(BaseScraper):
 
         additional: List[Dict[str, Any]] = []
 
-        for url, fac_name in facultades_urls:
+        for url, fac_name in dict.fromkeys(facultades_urls):
             html = self.http_client.get(url)
             if not html:
                 continue
+
+            if not fac_name:
+                soup = BeautifulSoup(html, "html.parser")
+                heading = soup.find("h1") or soup.title
+                if heading:
+                    fac_name = clean_text(heading.get_text(" ", strip=True))
+                if not fac_name:
+                    slug = url.rstrip("/").split("/")[-1]
+                    fac_name = slug.replace("-", " ").replace("_", " ").title()
 
             subdecano_m = re.search(
                 r"Subdecan[oa]\s*:\s*([^\n\r<.,]+)", html, re.IGNORECASE

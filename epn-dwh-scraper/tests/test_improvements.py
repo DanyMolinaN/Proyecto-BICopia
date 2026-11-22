@@ -397,21 +397,20 @@ class TestPaginacionYFechas:
 
         call_count = 0
 
-        def fake_get(url, timeout, verify):
+        def fake_get(url):
             nonlocal call_count
             call_count += 1
-            post = {
-                "id": call_count,
+            return json.dumps([{
+                "id": call_count * 100 + i,
                 "date": "2024-05-01T10:00:00",
                 "modified": "2024-05-01T10:00:00",
-                "title": {"rendered": f"Noticia {call_count}"},
+                "title": {"rendered": f"Noticia {call_count}-{i}"},
                 "excerpt": {"rendered": ""},
-                "link": "https://epn.edu.ec/n1",
+                "link": f"https://epn.edu.ec/n{i}",
                 "categories": [],
-            }
-            return self._make_response(200, {"X-WP-TotalPages": "5"}, [post])
+            } for i in range(100)])
 
-        mock_http.session.get.side_effect = fake_get
+        mock_http.get.side_effect = fake_get
         monkeypatch.setattr("src.config.settings.base_url", "https://www.epn.edu.ec")
         monkeypatch.setattr("src.config.settings.endpoints", {
             "noticias_api": "https://www.epn.edu.ec/wp-json/wp/v2/posts",
@@ -434,11 +433,11 @@ class TestPaginacionYFechas:
         scraper, mock_http = self._make_scraper(monkeypatch, tmp_path)
         captured_urls = []
 
-        def fake_get(url, timeout, verify):
+        def fake_get(url):
             captured_urls.append(url)
-            return self._make_response(400, {}, [])
+            return None
 
-        mock_http.session.get.side_effect = fake_get
+        mock_http.get.side_effect = fake_get
         monkeypatch.setattr("src.config.settings.base_url", "https://www.epn.edu.ec")
         monkeypatch.setattr("src.config.settings.endpoints", {
             "noticias_api": "https://www.epn.edu.ec/wp-json/wp/v2/posts",
@@ -461,23 +460,22 @@ class TestPaginacionYFechas:
 
         call_count = 0
 
-        def fake_get(url, timeout, verify):
+        def fake_get(url):
             nonlocal call_count
             call_count += 1
             if call_count == 1:
-                post = {
-                    "id": 1,
+                return json.dumps([{
+                    "id": i,
                     "date": "2024-06-01T10:00:00",
                     "modified": "2024-06-01T10:00:00",
-                    "title": {"rendered": "Noticia 1"},
+                    "title": {"rendered": f"Noticia {i}"},
                     "excerpt": {"rendered": ""},
-                    "link": "https://epn.edu.ec/n1",
+                    "link": f"https://epn.edu.ec/n{i}",
                     "categories": [],
-                }
-                return self._make_response(200, {"X-WP-TotalPages": "5"}, [post])
-            return self._make_response(400, {}, [])
+                } for i in range(100)])
+            return None
 
-        mock_http.session.get.side_effect = fake_get
+        mock_http.get.side_effect = fake_get
         monkeypatch.setattr("src.config.settings.base_url", "https://www.epn.edu.ec")
         monkeypatch.setattr("src.config.settings.endpoints", {
             "noticias_api": "https://www.epn.edu.ec/wp-json/wp/v2/posts",
@@ -491,7 +489,7 @@ class TestPaginacionYFechas:
             result = scraper._extract_via_api()
 
         assert call_count == 2
-        assert len(result) == 1
+        assert len(result) == 100
 
 
 class TestTildesYFechasFabricadas:

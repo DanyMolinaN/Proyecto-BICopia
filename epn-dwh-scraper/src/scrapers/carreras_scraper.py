@@ -36,12 +36,21 @@ from src.utils.helpers import (
 class CarrerasScraper(BaseScraper):
     """Extrae informacion dimensional y descriptiva de las carreras ofrecidas por la institucion."""
 
-    def __init__(self, http_client=None, institucion_id=None) -> None:
-        super().__init__(http_client=http_client, institucion_id=institucion_id)
-        inst = registry.get(self.institucion_id)
+    def __init__(
+        self,
+        http_client=None,
+        institucion_id=None,
+        institucion=None,
+    ) -> None:
+        super().__init__(
+            http_client=http_client,
+            institucion_id=institucion_id,
+            institucion=institucion,
+        )
+        inst = self.institucion
         self._financiamiento = inst.financiamiento if inst else "pública"
-        self._base_url = inst.base_url if inst else settings.base_url
-        self._endpoints = inst.endpoints if inst else settings.endpoints
+        self._base_url = inst.base_url if inst and inst.base_url else settings.base_url
+        self._endpoints = inst.endpoints if inst and inst.endpoints else settings.endpoints
 
     def _discover_program_urls(self) -> List[Tuple[str, str]]:
         """Descubre las URLs de programas de grado y posgrado en los portales oficiales.
