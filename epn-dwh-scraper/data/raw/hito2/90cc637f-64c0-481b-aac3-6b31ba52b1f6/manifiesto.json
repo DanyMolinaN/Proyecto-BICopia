@@ -1,0 +1,24 @@
+{
+  "run_id": "90cc637f-64c0-481b-aac3-6b31ba52b1f6",
+  "fecha_generacion_utc": "2026-11-22T21:54:42.265947+00:00",
+  "fuente_configuracion": "matriz_fuentes_ies.csv",
+  "periodos_objetivo": {
+    "oferta": "páginas oficiales configuradas; consulta 2026; nivel/vigencia por validar",
+    "autoridades": "observación en fecha de extracción de 2026",
+    "noticias": "publicaciones del 2024-01-01 al 2025-12-31",
+    "facultades": "directorio oficial observado en fecha de extraccion",
+    "docentes": "directorio oficial observado en fecha de extraccion; vigencia por confirmar"
+  },
+  "archivos": [
+    "matriz_fuentes_ies.csv",
+    "oferta_raw.csv",
+    "autoridades_raw.csv",
+    "noticias_raw.csv",
+    "facultades_raw.csv",
+    "docentes_raw.csv",
+    "cobertura_extraccion.csv",
+    "inventario_fuentes.csv"
+  ],
+  "html_y_json_originales": "data/raw/<fecha>/<ces_cod>/<run_id>/ (guardados por HttpClient)",
+  "nota": "Los enlaces de oferta se guardan sin afirmar carrera, nivel o vigencia; los datos quedan sin limpieza analítica."
+}

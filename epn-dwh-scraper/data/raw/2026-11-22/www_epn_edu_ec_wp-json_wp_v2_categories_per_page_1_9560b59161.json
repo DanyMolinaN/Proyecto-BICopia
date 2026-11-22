@@ -1,0 +1,1709 @@
+[
+  {
+    "id": 343,
+    "count": 1,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/becas-y-oportunidades/",
+    "name": "becas y oportunidades",
+    "slug": "becas-y-oportunidades",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/343",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=343"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 190,
+    "count": 2,
+    "description": "Espacio para compartir textos informativos sobre consejos, salud, ambiente laboral, buenas prácticas. etc",
+    "link": "https://www.epn.edu.ec/category/bienestar-personal/",
+    "name": "BIENESTAR PERSONAL",
+    "slug": "bienestar-personal",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/190",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=190"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 192,
+    "count": 4,
+    "description": "Mensajes oficiales para transmitir una información específica ",
+    "link": "https://www.epn.edu.ec/category/comunicado/",
+    "name": "COMUNICADO",
+    "slug": "comunicado",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/192",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=192"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 211,
+    "count": 1,
+    "description": "Concursos de méritos y oposición",
+    "link": "https://www.epn.edu.ec/category/concurso/",
+    "name": "CONCURSO",
+    "slug": "concurso",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/211",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=211"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 111,
+    "count": 1,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/doctorados/",
+    "name": "Doctorados",
+    "slug": "doctorados",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/111",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=111"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 171,
+    "count": 1,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/escuela/",
+    "name": "Escuela",
+    "slug": "escuela",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/171",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=171"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 193,
+    "count": 0,
+    "description": "Suceso o acontecimiento social, deportivo, culturale, empresarial o institucional, de interés para la EPN.",
+    "link": "https://www.epn.edu.ec/category/evento/",
+    "name": "EVENTO",
+    "slug": "evento",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/193",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=193"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 119,
+    "count": 9,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/facultades/",
+    "name": "Facultades",
+    "slug": "facultades",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/119",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=119"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 341,
+    "count": 3,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/galeria/",
+    "name": "galeria",
+    "slug": "galeria",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/341",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=341"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 124,
+    "count": 1,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/grado/",
+    "name": "Grado",
+    "slug": "grado",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/124",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=124"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 93,
+    "count": 4,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/institucion/",
+    "name": "Institución",
+    "slug": "institucion",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/93",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=93"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 319,
+    "count": 4,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/intranet/",
+    "name": "INTRANET",
+    "slug": "intranet",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/319",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=319"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 322,
+    "count": 16,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/intranet/intranet-comunicados-academico/",
+    "name": "Intranet - Comunicados - Académico",
+    "slug": "intranet-comunicados-academico",
+    "taxonomy": "category",
+    "parent": 319,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/322",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/319"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=322"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 316,
+    "count": 15,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/intranet/intranet-comunicados-administrativo/",
+    "name": "Intranet - Comunicados - Administrativo",
+    "slug": "intranet-comunicados-administrativo",
+    "taxonomy": "category",
+    "parent": 319,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/316",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/319"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=316"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 325,
+    "count": 12,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/intranet/intranet-comunicados-estudiante/",
+    "name": "Intranet - Comunicados - Estudiante",
+    "slug": "intranet-comunicados-estudiante",
+    "taxonomy": "category",
+    "parent": 319,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/325",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/319"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=325"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 305,
+    "count": 23,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/intranet/intranet-noticias-academico/",
+    "name": "Intranet - Noticias - Académico",
+    "slug": "intranet-noticias-academico",
+    "taxonomy": "category",
+    "parent": 319,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/305",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/319"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=305"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 306,
+    "count": 19,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/intranet/intranet-noticias-administrativo/",
+    "name": "Intranet - Noticias - Administrativo",
+    "slug": "intranet-noticias-administrativo",
+    "taxonomy": "category",
+    "parent": 319,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/306",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/319"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=306"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 307,
+    "count": 15,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/intranet/intranet-noticias-estudiante/",
+    "name": "Intranet - Noticias - Estudiante",
+    "slug": "intranet-noticias-estudiante",
+    "taxonomy": "category",
+    "parent": 319,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/307",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/319"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=307"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 328,
+    "count": 2,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/intranet/intranet-reconocimiento-al-docente-academico/",
+    "name": "Intranet - Reconocimiento al docente - Académico",
+    "slug": "intranet-reconocimiento-al-docente-academico",
+    "taxonomy": "category",
+    "parent": 319,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/328",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "up": [
+        {
+          "embeddable": true,
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/319"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=328"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 135,
+    "count": 0,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/laboratorio/",
+    "name": "Laboratorio",
+    "slug": "laboratorio",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/135",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=135"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 114,
+    "count": 6,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/maestrias-academicas/",
+    "name": "Maestrías Académicas",
+    "slug": "maestrias-academicas",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/114",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=114"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 113,
+    "count": 10,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/maestrias-de-investigacion/",
+    "name": "Maestrías de Investigación",
+    "slug": "maestrias-de-investigacion",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/113",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=113"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 112,
+    "count": 13,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/maestrias-profesionales/",
+    "name": "Maestrías Profesionales",
+    "slug": "maestrias-profesionales",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/112",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=112"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 295,
+    "count": 90,
+    "description": "Estas noticias aparecerán en la EXTRANET",
+    "link": "https://www.epn.edu.ec/category/noticia-extranet/",
+    "name": "Noticia extranet",
+    "slug": "noticia-extranet",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/295",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=295"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 191,
+    "count": 75,
+    "description": "Informes objetivos e independientes sobre eventos o temas de interés público",
+    "link": "https://www.epn.edu.ec/category/noticias/",
+    "name": "NOTICIAS",
+    "slug": "noticias",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/191",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=191"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 100,
+    "count": 1,
+    "description": "Menús de galerías o programas que agrupan información.",
+    "link": "https://www.epn.edu.ec/category/oferta-academica/",
+    "name": "Oferta Académica",
+    "slug": "oferta-academica",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/100",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=100"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 348,
+    "count": 32,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/ofertas-laborales/",
+    "name": "OFERTAS LABORALES",
+    "slug": "ofertas-laborales",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/348",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=348"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 168,
+    "count": 0,
+    "description": "Usar para noticas de la facultad, aparecerá junto a video inicial",
+    "link": "https://www.epn.edu.ec/category/post-fac-civil/",
+    "name": "POST FAC CIVIL",
+    "slug": "post-fac-civil",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/168",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=168"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 169,
+    "count": 0,
+    "description": "Usar para noticas de la facultad, aparecerá junto a video inicial",
+    "link": "https://www.epn.edu.ec/category/post-fac-mecanica/",
+    "name": "POST FAC MECANICA",
+    "slug": "post-fac-mecanica",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/169",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=169"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 239,
+    "count": 0,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/reconocimiento-al-docente/",
+    "name": "RECONOCIMIENTO AL DOCENTE",
+    "slug": "reconocimiento-al-docente",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/239",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=239"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 200,
+    "count": 14,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/resolucion/",
+    "name": "RESOLUCIÓN",
+    "slug": "resolucion",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/200",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=200"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 340,
+    "count": 81,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/resoluciones/",
+    "name": "RESOLUCIONES",
+    "slug": "resoluciones",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/340",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=340"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 128,
+    "count": 0,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/servicios/",
+    "name": "SERVICIOS",
+    "slug": "servicios",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/128",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=128"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 1,
+    "count": 77,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/sin-categoria/",
+    "name": "Sin categoría",
+    "slug": "sin-categoria",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/1",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=1"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 98,
+    "count": 4,
+    "description": "",
+    "link": "https://www.epn.edu.ec/category/tecnologia-superior/",
+    "name": "Tecnología Superior",
+    "slug": "tecnologia-superior",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/98",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=98"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 99,
+    "count": 2,
+    "description": "Tecnología Superior Modalidad Dual",
+    "link": "https://www.epn.edu.ec/category/tecnologia-superior-md/",
+    "name": "Tecnología Superior MD",
+    "slug": "tecnologia-superior-md",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/99",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=99"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 104,
+    "count": 24,
+    "description": "Carreras o programas de tercer nivel",
+    "link": "https://www.epn.edu.ec/category/tercer-nivel/",
+    "name": "Tercer Nivel",
+    "slug": "tercer-nivel",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories/104",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.epn.edu.ec/wp-json/wp/v2/posts?categories=104"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]
