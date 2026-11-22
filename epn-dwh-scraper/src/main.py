@@ -312,6 +312,22 @@ def main() -> None:
     
     # Nuevas banderas del Hito 2 (Regla 7 y F4)
     parser.add_argument("--institucion", type=str, default="EPN", help="ID de la institucion a procesar (ej: EPN, ESPE, USFQ o código CES).")
+    parser.add_argument(
+        "--instituciones",
+        type=str,
+        default=None,
+        help="Lista separada por comas de códigos CES o siglas; usa el ETL original y guarda cada IES en su propia carpeta.",
+    )
+    parser.add_argument(
+        "--oferta-bruta",
+        action="store_true",
+        help="Extraer enlaces publicados en las páginas configuradas y anexarlos a data/raw/oferta_academica_enlaces_raw.csv.",
+    )
+    parser.add_argument(
+        "--hito2",
+        action="store_true",
+        help="Extraer oferta, autoridades, facultades, docentes disponibles y noticias 2024-2025 de las IES configuradas; guarda archivos crudos versionados.",
+    )
     parser.add_argument("--max-paginas", type=int, default=50, help="Maximo de paginas a recorrer en endpoints paginados.")
     parser.add_argument("--dry-run", action="store_true", help="Ejecutar en modo prueba sin escribir en BD ni persistir masivamente.")
     parser.add_argument("--target", choices=["stg", "sqlite", "csv", "all"], default="sqlite", help="Destino de persistencia (defecto: sqlite).")
@@ -320,15 +336,82 @@ def main() -> None:
     parser.add_argument("--ces64", action="store_true", help="Ejecutar orquestador multi-institución para el catálogo de las 64 IES del CES.")
     parser.add_argument("--tipo", type=str, choices=["publica", "particular_autofinanciada", "particular_cofinanciada"], default=None, help="Filtrar IES por tipo de financiamiento CES.")
     parser.add_argument("--lote", type=int, default=None, help="Número máximo de instituciones a procesar en el lote.")
-    parser.add_argument("--modulo", type=str, choices=["ces", "noticias", "autoridades", "oferta", "todos"], default="todos", help="Módulo a ejecutar (ces, noticias, autoridades, oferta, todos).")
+    parser.add_argument("--modulo", type=str, choices=["ces", "noticias", "autoridades", "facultades", "docentes", "oferta", "todos"], default="todos", help="Módulo a ejecutar (ces, noticias, autoridades, facultades, docentes, oferta, todos).")
     parser.add_argument("--reanudar", action="store_true", help="Omitir instituciones y módulos ya extraídos con éxito en la ejecución actual.")
 
     args = parser.parse_args()
 
+    if args.hito2:
+        if args.ces64 or args.oferta_bruta or args.instituciones:
+            parser.error("--hito2 ejecuta por sí solo la extracción de oferta, autoridades, facultades, docentes disponibles y noticias para el catálogo CES-64.")
+        from src.ces64_runner import Ces64Runner
+        runner = Ces64Runner(
+            modulos=["oferta", "autoridades", "facultades", "docentes", "noticias"],
+            tipo=args.tipo,
+            lote=args.lote,
+            max_paginas=args.max_paginas,
+            dry_run=args.dry_run,
+            reanudar=args.reanudar,
+            use_cache=not args.no_cache,
+            force_refresh=args.force_refresh,
+            target=args.target,
+        )
+        runner.run()
+        return
+
+    if args.oferta_bruta:
+        from src.scrapers.oferta_academica_raw import extraer_oferta_bruta, plan_oferta_bruta
+        if args.dry_run:
+            plan_oferta_bruta()
+        else:
+            extraer_oferta_bruta()
+        return
+
+    # Extensión multi-IES del ETL original. Cada ejecución conserva el mismo
+    # contrato de tablas de main.py, pero separa los CSV por institución.
+    if args.instituciones:
+        if "--target" in sys.argv and args.target != "csv":
+            parser.error("El modo --instituciones actualmente solo admite --target csv para mantener separados los resultados.")
+        institution_ids = [value.strip() for value in args.instituciones.split(",") if value.strip()]
+        if not institution_ids:
+            parser.error("--instituciones requiere al menos un código CES o sigla.")
+
+        processed = settings.data_processed_dir
+        for institution_id in institution_ids:
+            inst = registry.get(institution_id)
+            if inst is None:
+                logger.error(f"[{institution_id}] No existe en la configuración; se omite.")
+                continue
+            if not inst.base_url or inst.estado_integracion not in ("habilitada", "piloto"):
+                logger.warning(
+                    f"[{inst.id}] Sin portal oficial configurado y habilitado; se omite. "
+                    "Añada el sitio oficial y endpoints revisados a la configuración antes de extraer."
+                )
+                continue
+
+            pipeline = ETLPipeline(
+                use_cache=not args.no_cache,
+                force_refresh=args.force_refresh,
+                institucion_id=inst.id,
+                max_paginas=args.max_paginas,
+                dry_run=args.dry_run,
+                target="csv",
+            )
+            pipeline.csv_loader.target_dir = processed / str(inst.id)
+            pipeline.csv_loader.target_dir.mkdir(parents=True, exist_ok=True)
+            logger.info(f"[{inst.id}] Ejecutando ETL original desde {inst.base_url}")
+            try:
+                pipeline.run_all()
+            except Exception as exc:
+                logger.exception(f"[{inst.id}] Error en la extracción; continúa con la siguiente institución: {exc}")
+        return
+
     # Flujo comando único --ces64
     if args.ces64:
         from src.ces64_runner import Ces64Runner
-        modulos_list = ["ces", "noticias", "autoridades", "oferta"] if args.modulo == "todos" else [args.modulo]
+        if args.modulo == "ces":
+            parser.error("El modo universitario no consulta fichas CES; use solo módulos de sitios oficiales universitarios.")
+        modulos_list = ["noticias", "autoridades", "facultades", "docentes", "oferta"] if args.modulo == "todos" else [args.modulo]
         # Determinar si se pasó institución específica (distinta del default EPN si el usuario no la especificó)
         # Para detectar si el usuario pasó --institucion explícitamente:
         inst_especifica = [x.strip() for x in args.institucion.split(",")] if "--institucion" in sys.argv else None

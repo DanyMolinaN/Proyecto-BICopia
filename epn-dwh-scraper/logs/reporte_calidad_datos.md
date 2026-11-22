@@ -5,19 +5,23 @@ El presente reporte consolida los controles aplicados sobre el conjunto de dimen
 
 | Tabla | Registros | Claves Duplicadas | Nulos Totales | Estado |
 | :--- | :--- | :--- | :--- | :--- |
+| dim_institucion | 1 | 0 | 0 | CONFORME |
 | dim_tiempo | 7670 | 0 | 0 | CONFORME |
 | dim_facultad | 9 | 0 | 22 | CONFORME |
 | dim_carrera | 46 | 0 | 152 | CONFORME |
 | dim_nivel_formacion | 4 | 0 | 0 | CONFORME |
 | dim_modalidad | 2 | 0 | 0 | CONFORME |
-| fact_oferta_academica | 46 | 0 | 164 | OBSERVACIONES DETECTADAS |
+| fact_oferta_academica | 46 | 0 | 152 | OBSERVACIONES DETECTADAS |
 | dim_autoridad | 10 | 0 | 20 | CONFORME |
 | dim_cargo | 10 | 0 | 0 | CONFORME |
-| fact_designacion_autoridades | 10 | 0 | 1 | CONFORME |
-| dim_categoria_noticia | 5 | 0 | 0 | CONFORME |
-| fact_comunicacion_institucional | 30 | 0 | 0 | CONFORME |
+| fact_designacion_autoridades | 10 | 0 | 17 | CONFORME |
+| dim_categoria_noticia | 26 | 0 | 0 | CONFORME |
+| fact_comunicacion_institucional | 194 | 0 | 7 | CONFORME |
 
 ## Detalle de Observaciones y Reglas Evaluadas
+### dim_institucion
+- Todos los controles de integridad, tipo de dato y unicidad resultaron conformes.
+
 ### dim_tiempo
 - Todos los controles de integridad, tipo de dato y unicidad resultaron conformes.
 
@@ -43,8 +47,8 @@ El presente reporte consolida los controles aplicados sobre el conjunto de dimen
 - Todos los controles de integridad, tipo de dato y unicidad resultaron conformes.
 
 ### fact_oferta_academica
-- 16 registros con facultad_key nula o sin registro en la dimension referenciada.
-- Info: facultad_key sin dato en 16 de 46 registros (35%).
+- 4 registros con facultad_key nula o sin registro en la dimension referenciada.
+- Info: facultad_key sin dato en 4 de 46 registros (9%).
 - Info: duracion_periodos sin dato en 28 de 46 registros (61%).
 - Info: duracion_anios sin dato en 28 de 46 registros (61%).
 - Info: creditos_totales sin dato en 46 de 46 registros (100%).
@@ -59,9 +63,11 @@ El presente reporte consolida los controles aplicados sobre el conjunto de dimen
 
 ### fact_designacion_autoridades
 - Info: facultad_key sin dato en 1 de 10 registros (10%).
+- Info: es_titular sin dato en 8 de 10 registros (80%).
+- Info: evidencia_condicion sin dato en 8 de 10 registros (80%).
 
 ### dim_categoria_noticia
 - Todos los controles de integridad, tipo de dato y unicidad resultaron conformes.
 
 ### fact_comunicacion_institucional
-- Todos los controles de integridad, tipo de dato y unicidad resultaron conformes.
+- Info: titulo sin dato en 7 de 194 registros (4%).

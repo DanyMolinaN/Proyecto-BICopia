@@ -1,8 +1,25 @@
 # Informe de Calidad de Datos — Hito 2
 **Proyecto:** EPN DWH Scraper — Multi-institución  
-**Ámbito:** Tablas `stg` (capa de staging cruda)  
+**Ámbito:** línea base histórica EPN en `stg` y adquisición cruda multi-IES (sin carga a `stg`)
 **Fecha de verificación:** 2026-11-21  
 **Entorno de medición:** Ejecución real controlada sobre el portal EPN (`python -m src.main --all --target stg --max-paginas 2`) y perfilado estadístico ejecutado en `notebooks/hito2_perfilado.ipynb` sobre base de datos SQLite `data/epn_dwh.db`.
+
+> **Alcance de este informe:** las métricas históricas detalladas más abajo corresponden únicamente a la EPN y al flujo `--all` indicado arriba. El perfil multi-IES medido en el lote `f7c0675f-e871-49c5-aab6-2f9560c25658` se resume a continuación. Ese lote contiene archivos crudos locales y no se cargó a PostgreSQL `stg`; el `--dry-run` solo comprueba configuración, sin descargar páginas.
+
+## Perfil de adquisición multi-IES — lote `f7c0675f-e871-49c5-aab6-2f9560c25658`
+
+Fuente del perfil: `data/raw/hito2/f7c0675f-e871-49c5-aab6-2f9560c25658/`. El lote se obtuvo desde los dominios universitarios configurados y conserva URL, hora de extracción y `run_id`. Los conteos representan extracción observada, no validación manual de que cada portal haya publicado la oferta completa.
+
+| Tema / regla | Medición observada | Evaluación para las preguntas de negocio |
+|---|---:|---|
+| Oferta académica | 1.066 filas para 39 IES; 86 títulos leídos de fichas oficiales; nivel explícito en 429 filas (349 tercer nivel, 80 cuarto nivel), 637 sin determinar | Parcial. Modalidad, financiamiento y vigencia están `no_determinado` en las 1.066 filas; no usar las filas como conteo de carreras vigentes. |
+| Autoridades | 109 filas para 19 IES; nombres, cargos y unidad no vacíos; 76 cargos quedaron como `Autoridad Universitaria`; 105/109 condiciones son `no_determinado` y 4 son `encargado` | Parcial. La cobertura no permite calcular la distribución nacional ni la proporción de encargados con confianza. |
+| Publicaciones | 297 filas para 17 IES; fecha dentro de 2024–2025 en 232 filas (74 de 2024, 158 de 2025) y procedentes de 3 IES; 65 sin fecha; 7 títulos vacíos; 45 con categoría `Sin categoría`; 193 tipos `no_determinado` | Parcial. Los registros sin fecha no sirven para el indicador trimestral. Las categorías y tipos requieren normalización temática antes de responder P3. |
+| Disponibilidad de fuente | Oferta: URL en 63/64 IES; autoridades: 25/64; noticias: 39/64. Estados de ejecución: 39 oferta `parcial`, 19 autoridades `ok`, 17 noticias `ok`; las demás secciones quedaron `sin_seccion` | La URL configurada no garantiza que responda ni que sea exhaustiva. Consultar `cobertura_extraccion.csv` por institución y módulo. |
+| Validez temporal de publicaciones | Fechas observadas entre `2024-02-11` y `2025-12-24`; todas las fechas válidas caen en la ventana 2024–2025 | Cumple para las 232 filas fechadas; no clasificar las 65 sin fecha en un trimestre. |
+| Unicidad | 0 duplicados por clave compuesta de autoridad y 0 posts duplicados por `(institucion_id, post_id)`; 59 enlaces de oferta se repiten entre páginas fuente | Los enlaces repetidos se conservan porque cada fila mantiene la URL de la página donde se observó. |
+
+**Limitaciones medidas:** el lote no cubre las 64 IES con datos válidos en los tres temas. No responde todavía P1 por modalidad/financiamiento/vigencia, ni P2 por condición de designación en la mayoría de autoridades, ni P3 con fechas para todas las instituciones. Tampoco reemplaza el diccionario, notebook ni carga a `stg` requeridos por los entregables de Hito 2.
 
 ---
 
@@ -111,3 +128,13 @@ Basado en `_safe_date()`, `extract_modality()` y validaciones de esquema.
    La Universidad San Francisco de Quito utiliza Drupal (`/core/*.css`) y no WordPress, por lo que el adaptador `/wp-json/` retorna HTTP 404. Su estado real es **"configurada, no consultada"**.
 4. **Disponibilidad temporal en ESPE:**  
    La Universidad de las Fuerzas Armadas (ESPE) tiene API de WordPress activa, pero su paginación pública expone únicamente publicaciones del año 2026, retornando 0 registros para la ventana analítica 2024-2025.
+
+
+## Actualización posterior de fuentes
+
+El 2026-11-22 se incorporaron URLs oficiales entregadas por el equipo y se regeneró
+`docs/secciones_fuentes_pendientes.csv`. La matriz distingue ahora fuentes sin URL
+de fuentes localizadas que requieren validar acceso, cobertura o extracción. Esta
+revisión cambió la configuración; no ejecutó un nuevo scraping. Los archivos crudos
+y los indicadores de calidad de la última corrida siguen describiendo la captura
+anterior hasta que se ejecute `python -m src.main --hito2`.

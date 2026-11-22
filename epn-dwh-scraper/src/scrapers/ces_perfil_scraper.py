@@ -109,58 +109,73 @@ class CesPerfilScraper(BaseScraper):
 
         try:
             soup = BeautifulSoup(html, "html.parser")
+            entry = soup.find("div", class_="entry-content") or soup
+            lines = [l.strip() for l in entry.get_text("\n").splitlines() if l.strip()]
 
-            # El CES usa una tabla o sección con etiquetas label: valor
-            # Intentamos múltiples estrategias de extracción
+            # Estrategia 1: Parseo secuencial de líneas en entry-content del CES
+            for i, line in enumerate(lines):
+                norm = line.upper().rstrip(":")
+                if norm == "IES" and i + 1 < len(lines):
+                    if not rec["nombre_ces"]:
+                        rec["nombre_ces"] = lines[i + 1]
+                    if i > 0 and not rec["tipo_institucional_ces"]:
+                        prev = lines[i - 1].strip()
+                        if any(t in prev.upper() for t in ("PÚBLICA", "PUBLICA", "PARTICULAR", "COFINANCIADA", "AUTOFINANCIADA")):
+                            rec["tipo_institucional_ces"] = prev
+                elif norm.startswith("SEDE") and not rec["sede"]:
+                    rec["sede"] = line
+                elif norm == "SIGLAS" and i + 1 < len(lines) and not rec["siglas_ces"]:
+                    rec["siglas_ces"] = lines[i + 1]
+                elif norm == "DIRECCIÓN" and i + 1 < len(lines) and not rec["direccion"]:
+                    rec["direccion"] = lines[i + 1]
+                elif norm in ("FECHA CREACIÓN", "FECHA DE CREACIÓN", "FECHA CREACION") and i + 1 < len(lines):
+                    rec["fecha_creacion"] = lines[i + 1]
+                elif norm in ("RECTOR/A", "RECTOR", "RECTORA") and i + 1 < len(lines):
+                    rec["cargo_rector_original"] = line
+                    rec["rector_nombre"] = lines[i + 1]
+                elif norm in ("FECHA DE INICIO GESTIÓN", "FECHA INICIO GESTIÓN", "FECHA INICIO GESTION", "FECHA DE INICIO GESTION") and i + 1 < len(lines):
+                    rec["fecha_inicio_gestion"] = lines[i + 1]
+                elif norm in ("FECHA FIN DE GESTIÓN", "FECHA FIN GESTIÓN", "FECHA FIN GESTION", "FECHA DE FIN GESTION") and i + 1 < len(lines):
+                    rec["fecha_fin_gestion"] = lines[i + 1]
 
-            # Estrategia 1: Tablas con th/td
-            tables = soup.find_all("table")
-            kv: Dict[str, str] = {}
-            for tbl in tables:
-                for tr in tbl.find_all("tr"):
+            # Estrategia 2 (Fallback si campos clave faltan): Tablas con th/td o divs
+            if not rec["nombre_ces"] or not rec["rector_nombre"]:
+                kv: Dict[str, str] = {}
+                for tr in soup.find_all("tr"):
                     cells = tr.find_all(["th", "td"])
                     if len(cells) >= 2:
                         key = cells[0].get_text(strip=True).lower()
                         val = cells[1].get_text(separator=" ", strip=True)
                         kv[key] = val
 
-            # Estrategia 2: divs con etiqueta label + span/div valor
-            for div in soup.find_all("div", class_=re.compile(r"field|info|dato", re.I)):
-                label_tag = div.find(class_=re.compile(r"label|title|key", re.I))
-                val_tag = div.find(class_=re.compile(r"value|content|data", re.I))
-                if label_tag and val_tag:
-                    key = label_tag.get_text(strip=True).lower()
-                    val = val_tag.get_text(separator=" ", strip=True)
-                    kv[key] = val
+                for p in soup.find_all(["p", "div", "span", "li"]):
+                    text = p.get_text(separator="|", strip=True)
+                    m = re.match(r"^([^:|]{3,40})[:|]\s*(.+)$", text)
+                    if m:
+                        key = m.group(1).strip().lower()
+                        val = m.group(2).strip()
+                        if key not in kv:
+                            kv[key] = val
 
-            # Estrategia 3: párrafos con patrón "Clave: Valor"
-            for p in soup.find_all(["p", "div", "span", "li"]):
-                text = p.get_text(separator="|", strip=True)
-                m = re.match(r"^([^:|]{3,40})[:|]\s*(.+)$", text)
-                if m:
-                    key = m.group(1).strip().lower()
-                    val = m.group(2).strip()
-                    if key not in kv:
-                        kv[key] = val
+                def _get(*keys: str) -> Optional[str]:
+                    for k in keys:
+                        for stored_k, v in kv.items():
+                            if k in stored_k:
+                                return v.strip() or None
+                    return None
 
-            # Mapeo de claves comunes del CES
-            def _get(*keys: str) -> Optional[str]:
-                for k in keys:
-                    for stored_k, v in kv.items():
-                        if k in stored_k:
-                            return v.strip() or None
-                return None
-
-            rec["nombre_ces"] = _get("nombre", "institución", "institucion")
-            rec["sede"] = _get("sede", "ciudad", "cantón", "canton")
-            rec["siglas_ces"] = _get("sigla", "abreviatura", "acrónimo", "acronimo")
-            rec["direccion"] = _get("dirección", "direccion", "domicilio")
-            rec["fecha_creacion"] = _get("creación", "creacion", "fundación", "fundacion")
-            rec["tipo_institucional_ces"] = _get("tipo", "financiamiento", "categoría", "categoria")
-            rec["rector_nombre"] = _get("rector", "representante legal", "autoridad")
-            rec["cargo_rector_original"] = _get("cargo", "denominación", "denominacion")
-            rec["fecha_inicio_gestion"] = _get("inicio de gestión", "inicio gestión", "inicio gestion", "fecha inicio")
-            rec["fecha_fin_gestion"] = _get("fin de gestión", "fin gestión", "fin gestion", "fecha fin")
+                if not rec["nombre_ces"]:
+                    rec["nombre_ces"] = _get("nombre", "institución", "institucion")
+                if not rec["rector_nombre"]:
+                    rec["rector_nombre"] = _get("rector", "representante legal", "autoridad")
+                if not rec["fecha_inicio_gestion"]:
+                    rec["fecha_inicio_gestion"] = _get("inicio de gestión", "inicio gestión", "fecha inicio")
+                if not rec["fecha_fin_gestion"]:
+                    rec["fecha_fin_gestion"] = _get("fin de gestión", "fin gestión", "fecha fin")
+                if not rec["siglas_ces"]:
+                    rec["siglas_ces"] = _get("sigla", "abreviatura", "acrónimo")
+                if not rec["direccion"]:
+                    rec["direccion"] = _get("dirección", "direccion", "domicilio")
 
             # Validación de nombre (normalización de tildes y mayúsculas)
             if rec["nombre_ces"]:
@@ -169,7 +184,6 @@ class CesPerfilScraper(BaseScraper):
                 rec["discrepancia_nombre"] = norm_ces != norm_cat
                 rec["estado_extraccion"] = "ok"
             else:
-                # Contenido parcial: se obtuvo HTML pero no el nombre
                 campos_ok = sum(1 for f in [
                     rec["sede"], rec["rector_nombre"],
                     rec["fecha_inicio_gestion"]

@@ -55,14 +55,15 @@ class TestScrapers:
         )
 
         assert rec["nombre_completo"] == "Dr. Tarquino Sanchez Almeida"
-        assert rec["titulo_academico"] == "Dr."
         assert rec["cargo"] == "Rector"
         assert rec["tipo_cargo"] == "Alta Direccion"
         # D1: sin evidencia explicita, condicion_designacion es no_determinado y es_titular queda None
         assert rec["condicion_designacion"] == "no_determinado"
         assert rec["es_titular"] is None
-        # El correo no se infiere: sin dato en la fuente queda NULL
-        assert rec["correo_contacto"] is None
+        # Datos personales no relacionados con el proyecto se excluyen.
+        assert "correo_contacto" not in rec
+        assert "biografia" not in rec
+        assert "titulo_academico" not in rec
 
         # Con evidencia explicita de titularidad o encargo
         rec_titular = scraper._build_record(

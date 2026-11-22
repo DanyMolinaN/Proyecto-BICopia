@@ -13,8 +13,14 @@ import pytest
 
 from src.instituciones import InstitucionConfig, load_ces64, registry
 from src.scrapers.ces_perfil_scraper import CesPerfilScraper
-from src.scrapers.portal_validator import PortalValidator
+from src.scrapers.portal_validator import (
+    PortalValidator,
+    _is_soft_404,
+    _probe_section,
+    _check_robots,
+)
 from src.ces64_runner import Ces64Runner, _estado_modulo, _build_inst_from_portal
+from src.scrapers.carreras_scraper import CarrerasScraper
 from src.utils.http_client import HttpClient
 
 
@@ -139,3 +145,156 @@ class TestCes64Components:
         tabla = runner.run()
         # En dry-run para 1001 y ces, debe registrar la ejecución sin romper
         assert isinstance(tabla, list)
+
+    def test_soft_404_detection(self):
+        """Detecta soft 404 por título o redirección a la portada y no la acepta como sección válida."""
+        # Caso 1: Redirección a la portada
+        assert _is_soft_404("<html><body>Bienvenido</body></html>", "https://ies.edu.ec/", "https://ies.edu.ec") is True
+        assert _is_soft_404("<html><body>Bienvenido</body></html>", "https://ies.edu.ec/index.php", "https://ies.edu.ec") is True
+
+        # Caso 2: HTTP 200 pero texto contiene 404 / no encontrada
+        html_soft = "<html><head><title>404 Not Found - Universidad</title></head><body><h1>Página no encontrada</h1></body></html>"
+        assert _is_soft_404(html_soft, "https://ies.edu.ec/carreras", "https://ies.edu.ec") is True
+
+        # Caso 3: Página válida real
+        html_ok = "<html><head><title>Oferta Académica - Universidad</title></head><body><h1>Carreras de Grado</h1><p>Lista de programas</p></body></html>"
+        assert _is_soft_404(html_ok, "https://ies.edu.ec/carreras", "https://ies.edu.ec") is False
+
+        # Caso 4: _probe_section descarta respuesta 200 con soft 404
+        mock_session = MagicMock()
+        mock_resp = MagicMock()
+        mock_resp.status_code = 200
+        mock_resp.url = "https://ies.edu.ec/noticias"
+        mock_resp.text = html_soft
+        mock_session.get.return_value = mock_resp
+
+        result = _probe_section(mock_session, "https://ies.edu.ec", ["/noticias"], timeout=5)
+        assert result is None
+
+    def test_robots_prohibits(self):
+        """Valida que robots.txt prohibitivo marque bloqueado_robots y bloquee el módulo."""
+        inst = InstitucionConfig({
+            "id": "1005", "nombre": "UCE", "sigla": "UCE",
+            "base_url": "https://www.uce.edu.ec",
+            "endpoints": {"noticias_web": "https://www.uce.edu.ec/noticias"},
+            "adaptador": "wordpress",
+        })
+        portal = {
+            "estado": "validado",
+            "robots_permite": "no",
+            "url_noticias": "https://www.uce.edu.ec/noticias",
+        }
+        assert _estado_modulo(inst, "noticias", portal) == "bloqueado_robots"
+
+    def test_estado_modulo_transitions(self):
+        """Verifica todas las transiciones de estado de módulo."""
+        inst = InstitucionConfig({
+            "id": "1018", "nombre": "UAE", "sigla": "UAE",
+            "base_url": "https://www.uagraria.edu.ec",
+            "endpoints": {},
+            "adaptador": "propio",
+        })
+        # Sin sección
+        portal = {"estado": "validado", "robots_permite": "si", "url_noticias": ""}
+        assert _estado_modulo(inst, "noticias", portal) == "sin_seccion"
+
+        # Sin adaptador (portal no wordpress para noticias)
+        portal["url_noticias"] = "https://www.uagraria.edu.ec/noticias"
+        assert _estado_modulo(inst, "noticias", portal) == "sin_adaptador"
+
+        # Listo para ejecutar
+        inst_wp = InstitucionConfig({
+            "id": "1002", "nombre": "ESPOCH", "sigla": "ESPOCH",
+            "base_url": "https://www.espoch.edu.ec",
+            "endpoints": {"noticias_web": "https://www.espoch.edu.ec/noticias"},
+            "adaptador": "wordpress",
+        })
+        portal_wp = {"estado": "validado", "robots_permite": "si", "url_noticias": "https://www.espoch.edu.ec/noticias"}
+        assert _estado_modulo(inst_wp, "noticias", portal_wp) == "pendiente"
+
+    def test_failure_isolation(self):
+        """El fallo en una institución no detiene la ejecución de las demás."""
+        runner = Ces64Runner(
+            modulos=["ces"],
+            institucion_ids=["1001", "1002"],
+            dry_run=False,
+        )
+        # Mockeamos _run_modulo para que la primera falle y la segunda tenga éxito
+        with patch("src.ces64_runner._run_modulo") as mock_run_m:
+            mock_run_m.side_effect = [
+                {"institucion_id": "1001", "modulo": "ces", "estado": "error_http", "registros_extraidos": 0, "paginas_consultadas": 1, "mensaje": "Connection timeout"},
+                {"institucion_id": "1002", "modulo": "ces", "estado": "ok", "registros_extraidos": 1, "paginas_consultadas": 1, "mensaje": "Ficha CES ok"},
+            ]
+            tabla = runner.run()
+            assert len(tabla) == 2
+            assert tabla[0]["estado"] == "error_http"
+            assert tabla[1]["estado"] == "ok"
+
+    def test_reanudar_skips_ok(self):
+        """--reanudar omite instituciones/módulos que ya terminaron con ok en el mismo run_id."""
+        runner = Ces64Runner(
+            modulos=["ces"],
+            institucion_ids=["1001"],
+            reanudar=True,
+        )
+        from src.ces64_runner import _RUN_ID
+        runner._ejecucion_previa = {(_RUN_ID, "1001", "ces"): "ok"}
+        assert runner._skip("1001", "ces") is True
+
+        # Si el estado anterior fue parcial o error, NO se debe omitir
+        runner._ejecucion_previa = {(_RUN_ID, "1001", "ces"): "parcial"}
+        assert runner._skip("1001", "ces") is False
+
+    def test_ces_perfil_scraper_estructura_distinta(self):
+        """Verifica que el parser de CES funcione tanto con formato secuencial h4color/entry-content como con fallback por párrafos clave-valor."""
+        # Formato párrafos o divs con etiquetas clave-valor
+        html_distinto = """
+        <html>
+            <div class="entry-content">
+                <p>INSTITUCIÓN: UNIVERSIDAD EXPERIMENTAL DEL SUR</p>
+                <p>SIGLA: UNESUR</p>
+                <p>SEDE: SEDE PRINCIPAL</p>
+                <p>DIRECCIÓN: AV. AMAZONAS 123</p>
+                <p>FECHA CREACIÓN: 2005-03-15</p>
+                <p>RECTOR: Dra. Carmen Rodríguez</p>
+                <p>FECHA DE INICIO GESTIÓN: 2022-05-10</p>
+                <p>FECHA FIN DE GESTIÓN: 2027-05-10</p>
+            </div>
+        </html>
+        """
+        row = {
+            "ces_cod": "2050",
+            "ces_codp": "328",
+            "tipo_ces": "publica",
+            "nombre": "UNIVERSIDAD EXPERIMENTAL DEL SUR",
+            "provincia": "LOJA",
+            "canton": "LOJA",
+        }
+        scraper = CesPerfilScraper()
+        rec = scraper._parse_ficha(html_distinto, "https://ces.gob.ec/ficha", row)
+        assert rec["nombre_ces"] == "UNIVERSIDAD EXPERIMENTAL DEL SUR"
+        assert rec["rector_nombre"] == "Dra. Carmen Rodríguez"
+        assert rec["fecha_inicio_gestion"] == "2022-05-10"
+        assert rec["fecha_fin_gestion"] == "2027-05-10"
+        assert rec["estado_extraccion"] == "ok"
+
+    def test_epn_baseline_regression(self):
+        """Prueba de regresión EPN: verifica que con los endpoints oficiales restaurados se extraen 46 programas (18 de grado y 28 de posgrado)."""
+        inst_epn = registry.get("1001")
+        assert inst_epn is not None
+        # Validar que endpoints sean los correctos
+        assert inst_epn.endpoints.get("oferta_grado") == "https://www.epn.edu.ec/oferta-de-grado/"
+        assert inst_epn.endpoints.get("oferta_posgrado") == "https://www.epn.edu.ec/oferta-de-posgrado/"
+
+        client = HttpClient(use_cache=True, institucion_id="EPN")
+        scraper = CarrerasScraper(http_client=client, institucion_id="EPN", institucion=inst_epn)
+        records = scraper.extract()
+
+        # Debe extraer exactamente 46 programas
+        assert len(records) == 46, f"Se esperaban 46 programas en línea base, pero se obtuvieron {len(records)}"
+        
+        # Conteo por nivel
+        grados = [r for r in records if r.get("nivel") in ("Grado", "Tecnologia")]
+        posgrados = [r for r in records if r.get("nivel") in ("Maestria", "Doctorado")]
+        assert len(grados) == 18, f"Se esperaban 18 programas de grado/tecnología, se obtuvieron {len(grados)}"
+        assert len(posgrados) == 28, f"Se esperaban 28 programas de posgrado, se obtuvieron {len(posgrados)}"

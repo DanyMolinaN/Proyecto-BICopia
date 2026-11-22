@@ -1,15 +1,15 @@
-# Pipeline ETL y Data Warehouse Institucional de la EPN
+# Pipeline ETL EPN y Adquisición Multi-IES de Ecuador
 
 ## Informacion General
-- **Proyecto**: Extraccion, Transformacion y Carga (ETL) de Datos Institucionales de la Escuela Politecnica Nacional para Data Warehouse Dimensional.
-- **Institucion**: Escuela Politecnica Nacional (EPN), Quito, Ecuador.
+- **Proyecto**: ETL y Data Warehouse dimensional para la línea base institucional de la EPN, con un flujo separado de adquisición cruda multi-IES para Hito 2.
+- **Alcance multi-IES**: catálogo de 64 instituciones; contenidos de oferta académica, autoridades y publicaciones obtenidos desde sitios oficiales universitarios.
 - **Materia**: Business Intelligence / Ingenieria de Datos.
 - **Nivel**: Superior Universitario / Pregrado y Posgrado.
 
 ---
 
 ## 1. Descripcion del Proyecto
-Este proyecto implementa una solucion integral de ingenieria de datos y Business Intelligence que automatiza la extraccion (web scraping etico), limpieza, validacion de calidad, modelado dimensional y carga (ETL) de informacion publica del portal institucional de la Escuela Politecnica Nacional (https://www.epn.edu.ec y sus facultades adscritas).
+El flujo ETL original automatiza la extracción, limpieza, validación, modelado y carga de información pública de la Escuela Politécnica Nacional (https://www.epn.edu.ec y sus facultades). Para Hito 2, `--hito2` es un flujo separado que adquiere datos crudos desde páginas oficiales de las IES configuradas; sus resultados multi-IES aún deben ejecutarse, perfilarse y validarse antes de considerarlos completos.
 
 El objetivo principal es poblar un Data Warehouse con un esquema de Constelacion de Hechos (Fact Constellation Schema) que soporte analisis OLAP, construccion de indicadores de gestion y reporteria estrategica para la toma de decisiones academicas y directivas en la universidad.
 
@@ -227,35 +227,15 @@ pytest -v
 
 ## 8.1 Hito 2 — Estado de Avance y Novedades Multi-Institución
 
-En el marco del Hito 2 (Adquisición y Calidad de Datos), el repositorio evolucionó a una arquitectura multi-institución desacoplada:
+El alcance de las preguntas de negocio de Hito 1/H1Barros es: P1 oferta académica, P2 autoridades y P3 publicaciones institucionales. El flujo `--hito2` obtiene datos de las páginas oficiales configuradas para oferta, autoridades, facultades, personal docente disponible y noticias. No utiliza GitHub ni el CES como fuente de carreras, autoridades o noticias; el catálogo CES solo aporta códigos y datos de identificación institucional.
 
-1. **Multi-Institución (`config/instituciones.yaml`, `src/instituciones.py`):**
-   - Registro formal de IES: EPN (habilitada), ESPE y USFQ (piloto), UCE, UTPL, PUCE, UG, ESPOL, ESPOCH, UTN (pendientes).
-   - Trazabilidad en cada registro crudo: `institucion_id`, `fecha_extraccion`, `run_id`, `fuente_url`, `hash_registro`.
-2. **Capa Staging en PostgreSQL (`sql/stg/`, `src/load/to_staging.py`):**
-   - Esquema `stg` con DDLs puros PostgreSQL: `stg_oferta`, `stg_autoridades`, `stg_publicaciones`, `stg_oferta_sniese`.
-   - Carga con append versionado por `run_id` e idempotencia garantizada por `hash_registro`.
-3. **P3 Comunicaciones 2024-2025 (`noticias_scraper.py`):**
-   - Paginación dinámica con `page`/`per_page=100`, corte por encabezado `X-WP-TotalPages`, filtro `after`/`before`.
-   - Categorías nativas WordPress API y resolución insensible a tildes (`remove_accents`).
-   - Eliminación de fechas fabricadas.
-4. **P2 Autoridades (`autoridades_scraper.py`):**
-   - Atributos `condicion_designacion` y `evidencia_condicion` (`titular`, `encargado`, `subrogante`, `no_determinado`).
-   - Normalización de cargos a catálogo estandarizado (`cargo_normalizado`).
-   - Deduplicación por clave compuesta `(institucion_id, nombre, cargo, unidad)`.
-5. **P1 Oferta y Segunda Fuente (`carreras_scraper.py`, `sniese_scraper.py`):**
-   - Integración de segunda fuente con catastro oficial SNIESE / CES (datosabiertos.gob.ec).
-   - Nuevos campos: `financiamiento`, `estado_programa`, `evidencia_estado`, `anio_referencia = 2026`.
-6. **Versionado de Datos Crudos (`http_client.py`):**
-   - Almacenamiento versionado por fecha `data/raw/<AAAA-MM-DD>/` y registro en `manifest.csv` con SHA-256 y estado HTTP.
-7. **Entregables Oficiales del Hito 2 (`docs/hito2/`):**
-   - `inventario_fuentes.xlsx` — Catálogo formal de fuentes integradas y consultadas.
-   - `diccionario_datos.xlsx` — Diccionario de datos de la capa Staging con tipos y descripciones.
-   - `matriz_cobertura.xlsx` — Matriz de cobertura institucional por pregunta de negocio.
-   - `informe_calidad.md` — Diagnóstico medido sobre las 6 dimensiones de calidad de datos.
-   - `claves_union.md` — Especificación de claves de enlace y linaje.
-   - `declaracion_ia.md` — Declaración formal de uso de IA según guía del proyecto.
-   - `notebooks/hito2_perfilado.ipynb` — Notebook ejecutable de perfilado sobre `stg`.
+El modelo analitico principal conserva las tres preguntas P1-P3 del documento H1Barros. El lote tambien guarda directorios de facultades y, como datos complementarios cuando hay una fuente nominal configurada, personal docente; estos CSV brutos no se convierten en una tabla de hechos del DWH.
+
+**Estado de la extracción multi-IES:** la configuración local contiene 64 instituciones y, en el último prechequeo (`--dry-run`), tenía URL de oferta para 63, autoridades para 25 y noticias para 39. Esos números significan que hay URLs configuradas; no certifican que las páginas respondan, que sean exhaustivas ni que sus datos se hayan descargado. El modo de prueba no hace solicitudes web y no crea un lote de datos.
+
+La oferta guarda candidatos visibles en enlaces, tarjetas, encabezados y tablas; cada fila conserva tipo de registro y evidencia para no tratar automaticamente una etiqueta como carrera vigente. Para tipo, nivel, modalidad y vigencia hay que revisar la evidencia en `oferta_raw.csv` y `cobertura_extraccion.csv`. El nivel se infiere solo cuando lo declara el título de la página; modalidad, financiamiento y vigencia quedan `no_determinado` si la ficha no los publica con una etiqueta explícita. Por tanto, el lote bruto aún no permite responder P1 con todas sus dimensiones; hay que revisar fichas y cobertura por institución mediante `cobertura_extraccion.csv`.
+
+Los documentos existentes en `docs/hito2/` son artefactos de trabajo: en particular, `informe_calidad.md` y `notebooks/hito2_perfilado.ipynb` describen la línea base EPN, no un perfil medido de las 64 IES. No deben citarse como medición de cobertura/calidad multi-IES hasta ejecutar y perfilar ese lote. La integración de SNIESE/CES no forma parte de esta extracción de contenido institucional.
 
 ### Nuevas Banderas CLI del Orquestador
 ```bash
@@ -292,3 +272,81 @@ El software respeta escrupulosamente el ordenamiento juridico ecuatoriano:
 ## 11. Autores y Licencia
 - **Desarrollador**: Proyecto academico de Business Intelligence, Escuela Politecnica Nacional.
 - **Licencia**: MIT License - Uso academico, educativo y de investigacion cientifica abierta.
+# Extracción inicial de oferta académica desde portales oficiales
+
+La primera etapa guarda enlaces observados en las páginas de oferta, sin
+normalizar ni completar nombres. La configuración `config/matriz_fuentes_ies.csv`
+contiene las URLs y los estados de revisión de la matriz de 64 IES. Los códigos,
+nombres, provincia y cantón se cotejan con `config/catalogo_ces.csv`. Las celdas
+pueden contener varias URLs separadas por punto y coma; se omiten las marcadas
+como pendientes y quedan registradas las instituciones sin URL de oferta.
+
+```powershell
+# Revisar las 64 instituciones y URLs configuradas sin conectarse a Internet
+python -m src.main --oferta-bruta --dry-run
+
+# Extraer en la máquina del equipo (el contacto es opcional)
+python -m src.main --oferta-bruta
+```
+
+La salida incremental queda en `data/raw/oferta_academica_enlaces_raw.csv`.
+Incluye el código canónico, institución, provincia/cantón, portal, URL de oferta,
+estado de revisión de esa URL, texto y enlace publicados sin afirmar que cada
+enlace sea una carrera, contexto, URL final, fecha, hash, corrida y estado. El CSV anterior
+`oferta_academica_raw.csv` se conserva como resultado histórico de la primera
+versión del extractor.
+Las respuestas HTML se guardan por institución bajo `data/raw/<fecha>/<ces_cod>/`.
+El extractor trabaja secuencialmente, exige `robots.txt`, espera al menos un
+segundo entre solicitudes al mismo host y continúa registrando el estado si un
+portal falla. Los enlaces de programas son texto crudo del contenido principal:
+no representan por sí solos una oferta completa ni vigencia académica.
+
+## Adquisición para Hito 2
+
+El flujo `--hito2` toma las URLs por categoría de `config/matriz_fuentes_ies.csv`
+y procesa oferta, autoridades y noticias con fechas de publicación entre 2024 y
+2025. La oferta se conserva como enlaces sin clasificar, y la cobertura marca
+qué URLs faltan o qué datos no se pudieron extraer. El modo no ejecuta las
+transformaciones analíticas del Hito 3.
+
+```powershell
+# Revisar URLs y cobertura local sin hacer solicitudes web
+python -m src.main --hito2 --dry-run
+
+# Extraer y guardar archivos locales crudos versionados por corrida
+python -m src.main --hito2
+
+# Si PostgreSQL de staging ya está configurado, cargar además a stg
+python -m src.main --hito2 --target stg
+```
+
+Cada corrida crea `data/raw/hito2/<run_id>/` con CSV y JSON por módulo, una copia
+de la matriz utilizada, `cobertura_extraccion.csv` y `manifiesto.json`. Las
+respuestas HTML/JSON originales que consulta `HttpClient` quedan en
+`data/raw/<fecha>/<ces_cod>/<run_id>/`. El resumen histórico de estados continúa en
+`data/ejecucion_institucion.csv`. Estos archivos permiten conectar y perfilar
+los datos en Power BI; el inventario completo, diccionario, diagnóstico y matriz
+de cobertura del Hito 2 todavía se documentan aparte.
+
+## Actualización de fuentes para P1–P3
+
+La columna opcional `dominios_oficiales_adicionales` autoriza dominios oficiales
+externos enlazados desde el portal institucional. Cada excepción debe verificarse
+en el sitio oficial antes de agregarla; actualmente se usa para el catálogo de
+grados de UNIANDES en `admisionuniandes.edu.ec`.
+
+El cliente HTTP consulta el `robots.txt` del host de cada fuente autorizada; no hereda las reglas del portal principal.
+
+Cuando una IES no tiene URL de noticias en la matriz, el extractor consulta su portada oficial solo para descubrir enlaces internos de noticias/actualidad; no clasifica publicaciones desde la portada. La URL descubierta queda registrada en `cobertura_extraccion.csv` para revisar si conviene incorporarla a la matriz.
+
+El modo `--hito2` genera CSV y JSON crudos de oferta, autoridades, facultades, docentes configurados y noticias dentro de `data/raw/hito2/<run_id>/`. Los fallos de red se registran como `error_http` o `bloqueado_robots`; `sin_fuente` indica que no existe URL configurada.
+
+Para regenerar `docs/secciones_fuentes_pendientes.csv` después de cambiar la matriz:
+
+```powershell
+python scripts/generar_secciones_fuentes_pendientes.py
+```
+
+El archivo separa secciones sin URL (`SIN_FUENTE`) de fuentes localizadas que aun
+requieren validar acceso, cobertura o extraccion (`VALIDAR_FUENTE_O_EXTRACCION`), e incluye facultades y directorios docentes complementarios.
+Incluye tambien directorios docentes como dato complementario cuando la matriz tiene URL oficial; la falta de directorio no afecta la definicion de P1-P3.

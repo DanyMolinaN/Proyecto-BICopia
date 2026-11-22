@@ -84,16 +84,49 @@ def _check_wordpress(session: requests.Session, base_url: str, timeout: int) -> 
         return False
 
 
+def _is_soft_404(html: str, final_url: str, base_url: str) -> bool:
+    """Detecta páginas de error 404 simuladas con HTTP 200 o redirección a la portada."""
+    # 1. Redirección silenciosa a la portada
+    clean_final = final_url.rstrip("/")
+    clean_base = base_url.rstrip("/")
+    if clean_final == clean_base or clean_final == f"{clean_base}/index.php" or clean_final == f"{clean_base}/home":
+        return True
+
+    # 2. Detección de títulos o textos clásicos de Soft 404
+    soup = BeautifulSoup(html, "html.parser")
+    title = (soup.title.string or "").lower() if soup.title else ""
+    soft_404_indicators = [
+        "404", "no encontrada", "not found", "no se encontró",
+        "no existe", "página no disponible", "error 404"
+    ]
+    if any(ind in title for ind in soft_404_indicators):
+        return True
+
+    # Comprobar encabezados h1/h2 prominentes
+    for h in soup.find_all(["h1", "h2"]):
+        h_text = h.get_text(strip=True).lower()
+        if any(ind in h_text for ind in soft_404_indicators):
+            return True
+
+    # 3. Contenido vacío o insignificante con palabra clave
+    body_text = soup.get_text(strip=True)
+    if len(body_text) < 150 and any(ind in body_text.lower() for ind in soft_404_indicators):
+        return True
+
+    return False
+
+
 def _probe_section(
     session: requests.Session, base_url: str, patterns: List[str], timeout: int
 ) -> Optional[str]:
-    """Prueba URLs candidatas de una sección; devuelve la primera que da HTTP 200."""
+    """Prueba URLs candidatas de una sección; devuelve la primera que da HTTP 200 y no es soft 404."""
     for pat in patterns:
         url = base_url.rstrip("/") + pat
         try:
             r = session.get(url, timeout=timeout, verify=False, allow_redirects=True)
             if r.status_code == 200:
-                return url
+                if not _is_soft_404(r.text, r.url, base_url):
+                    return r.url
         except Exception:
             pass
         time.sleep(0.3)
